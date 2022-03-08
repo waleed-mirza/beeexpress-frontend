@@ -1,0 +1,262 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+html {
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100%;
+}
+
+.navStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 30px 0px 30px;
+}
+
+.navStyle ul {
+  display: flex;
+}
+.navStyle ul li {
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0px 40px;
+  list-style: none;
+}
+.navStyle ul a {
+  margin: 0;
+}
+
+.home-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 80px;
+}
+.home-section .home-left-section h1 {
+  font-size: 55px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+.home-section .home-left-section p {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  opacity: 0.8;
+  line-height: 35px;
+}
+
+.button-style {
+  /* background: url("../src/images/Button\ Background.png"); */
+  background: #ffc400;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 15px 40px;
+}
+.login-btn {
+  padding: 10px 20px;
+  font-size: 17px;
+  margin: 0px 10px;
+  border: 3px solid #ffc400;
+}
+.signup-btn {
+  padding: 10px 20px;
+  font-size: 17px;
+  background: white;
+  border: 3px solid #ffc400;
+  font-weight: 500;
+}
+
+.card-button {
+  padding: 15px 40px;
+}
+
+.how-it-works {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.how-it-works .bee-backdrop {
+  position: absolute;
+  left: -50px;
+  z-index: -100;
+}
+.how-it-works .hive-backdrop {
+  position: absolute;
+  right: -280px;
+  bottom: -50px;
+  z-index: -100;
+}
+.how-it-works-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.how-it-works-title h1 {
+  font-size: 50px;
+  font-weight: 600;
+  margin-top: 110px;
+  margin-bottom: 20px;
+}
+.how-it-works-cards {
+  display: flex;
+  margin: 0px 30px;
+}
+
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 100px 30px;
+}
+.custom-card h1 {
+  font-size: 35px;
+  font-weight: 600;
+  margin: 20px 0px;
+}
+.custom-card p {
+  opacity: 0.8;
+  margin: 20px 0px;
+  font-size: 17px;
+  line-height: 35px;
+}
+
+.custom-footer {
+  position: absolute;
+  /* left: 0; */
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* About Section */
+
+.about-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50px 100px;
+}
+.about-section .about-section-left h1 {
+  font-size: 55px;
+  margin-bottom: 30px;
+}
+.about-section .about-section-left p {
+  font-size: 25px;
+  opacity: 0.8;
+  line-height: 35px;
+}
+.about-section .hive-backdrop {
+  position: absolute;
+  left: -250px;
+  bottom: -50px;
+  z-index: -100;
+}
+
+/* Contact Section */
+
+.contact-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 100px 100px;
+}
+.contact-section-right {
+  margin-left: 50px;
+}
+.contact-section .contact-section-right h1 {
+  font-size: 55px;
+  margin-bottom: 30px;
+}
+.contact-section .contact-section-right p {
+  font-size: 25px;
+  opacity: 0.8;
+  line-height: 35px;
+}
+.contact-section .hive-backdrop {
+  position: absolute;
+  right: -250px;
+  bottom: -10px;
+  z-index: -100;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+}
+
+.social-links a {
+  margin: 30px 45px 30px 0px;
+}
+
+/* Options Section */
+.options-section {
+  padding: 30px 100px;
+}
+
+.options-section .options-section-title h1 {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+.options-section .options-section-title p {
+  font-size: 25px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+}
+.options {
+  margin: 50px 0px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.option-1,
+.option-2 {
+  position: relative;
+  text-align: center;
+}
+.option-1-content,
+.option-2-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.option-1-content h1,
+.option-2-content h1 {
+  padding-top: 50px;
+  font-size: 40px;
+}
+.option-1-content p,
+.option-2-content p {
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-top: 30px;
+  line-height: 30px;
+}
+.front-arrow {
+  transform: rotate(180deg);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
