@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import AddCategory from "./AddCategory";
+import LoggedInNav from "./LoggedInNav";
+import AddRestaurant from "./AddRestaurant";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddMenu = () => {
   const [menu, setMenu] = useState({
@@ -10,24 +13,27 @@ const AddMenu = () => {
     price: null,
     categories: [],
   });
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userrole, setUserrole] = useState("");
+  const [checkflag, setCheckflag] = useState(false);
+  const [userId, setUserId] = useState(0);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/category/")
-  //     .then((response) => {
-  //       if (response.data.length > 0) {
-  //         setMenu({
-  //           categories: response.data.map((categ) => categ.category),
-  //           category: response.data[0].category,
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // });
+  function checkLoggedIn() {
+    if (localStorage.getItem("token")) {
+      setLoggedIn(true);
+    }
+  }
 
   useEffect(() => {
+    axios
+      .get("http://localhost:5000/auth/checklogin", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (res.data.loggedIn === true) setUserId(res.data.id);
+      });
     axios
       .get("http://localhost:5000/category/")
       .then((response) => {
@@ -42,7 +48,9 @@ const AddMenu = () => {
       .catch((error) => {
         console.log("Error is" + error);
       });
-  }, []);
+    checkLoggedIn();
+    setUserrole(localStorage.getItem("userrole"));
+  }, [checkflag]);
 
   const setCategory = (e) => {
     // setMenu({ ...menu, category: e.target.value });
@@ -55,6 +63,11 @@ const AddMenu = () => {
   const setPrice = (e) => {
     setMenu({ ...menu, price: e.target.value });
   };
+  const showCart = () => {
+    var element = document.getElementById("cart");
+    element.classList.remove("cart-hide");
+    element.classList.add("cart");
+  };
   const menuSubmit = (e) => {
     e.preventDefault();
     const displayMenu = {
@@ -62,52 +75,101 @@ const AddMenu = () => {
       category: menu.category,
       menuitem: menu.menuitem,
       price: menu.price,
+      managerid: userId,
     };
 
     console.log(displayMenu);
     // window.location = "/";
     axios
       .post("http://localhost:5000/menu/add", displayMenu)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        setMenu({
+          category: "",
+          menuitem: "",
+          price: null,
+          categories: [],
+        });
+
+        setCheckflag(!checkflag);
+        console.log(menu);
+      })
       .catch((err) => console.log(err));
   };
+  if (userrole === "manager") {
+    return (
+      <>
+        {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
+        <div className="w-100 row justify-content-around">
+          <AddRestaurant setCheckflag={setCheckflag} checkflag={checkflag} />
+          <AddCategory setCheckflag={setCheckflag} checkflag={checkflag} />
+        </div>
+        <div className="w-100 row justify-content-center">
+          <div className="add-menu-section row justify-centent-center flex-column">
+            <h1>Add Menu</h1>
 
-  return (
-    <>
-      <AddCategory />
-      <div className="add-menu-section">
-        <h1>Add Menu</h1>
-
-        <form onSubmit={menuSubmit}>
-          <label htmlFor="">Categories:</label>
-          <select VALUE={menu.category} onChange={setCategory}>
-            {menu.categories.map(function (singlecateg) {
-              return (
-                <option key={singlecateg} VALUE={singlecateg}>
-                  {singlecateg}
-                </option>
-              );
-            })}
-          </select>
-          {/* <input
+            <div className="col-1">
+              <div className="row-1">
+                <form onSubmit={menuSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="">Categories:</label>
+                    <select
+                      VALUE={menu.category}
+                      onChange={setCategory}
+                      // className="form-control"
+                    >
+                      <option>Select below</option>
+                      {menu.categories.map(function (singlecateg) {
+                        return (
+                          <option key={singlecateg} VALUE={singlecateg}>
+                            {singlecateg}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  {/* <input
             id="category"
             type="text"
             VALUE={menu.category}
             onChange={setCategory}
           /> */}
-          <label htmlFor="">Item:</label>
-          <input type="text" VALUE={menu.menuitem} onChange={setMenuItem} />
-          <label htmlFor="">Price:</label>
-          <input type="number" VALUE={menu.price} onChange={setPrice} />
-          <input type="submit" VALUE="Submit" />
-        </form>
-        <p>{menu.category}</p>
-        <p>{menu.menuitem}</p>
-        <p>{menu.price}</p>
-        <p>{JSON.stringify(menu)}</p>
-      </div>
-    </>
-  );
+                  <div className="form-group">
+                    <label htmlFor="">Item:</label>
+                    <input
+                      type="text"
+                      VALUE={menu.menuitem}
+                      onChange={setMenuItem}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">Price:</label>
+                    <input
+                      type="number"
+                      VALUE={menu.price}
+                      onChange={setPrice}
+                    />
+                  </div>
+                  <input
+                    type="submit"
+                    value="Submit"
+                    className="btn btn-primary"
+                  />
+                </form>
+              </div>
+            </div>
+            <p>{menu.category}</p>
+            <p>{menu.menuitem}</p>
+            <p>{menu.price}</p>
+            {/* <p>{JSON.stringify(menu)}</p> */}
+          </div>
+        </div>
+      </>
+    );
+  } else {
+    if (localStorage.getItem(userrole) === "customer")
+      window.location.href = "/newlogin";
+    return <div>hello</div>;
+  }
 };
 
 export default AddMenu;

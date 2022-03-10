@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import "../styles/FoodOrderPage.css";
 
@@ -14,10 +14,11 @@ import hiveBackdrop from "../images/Hive Backdrop.svg";
 
 // Importing other packages
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // Static data
 
-const restaurants = [
+const staticrestaurants = [
   {
     id: 1,
     name: "Kaybees",
@@ -63,6 +64,23 @@ const showCart = () => {
 };
 
 const FoodOrderPage = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://localhost:5000/restaurant/getall",
+    }).then((res) => {
+      const result = res.data;
+      for (let index = 0; index < result.length; index++) {
+        result[index].name = result[index].restaurant.toUpperCase();
+        result[index].distance = staticrestaurants[index].distance;
+        result[index].time = staticrestaurants[index].time;
+      }
+      console.log(result);
+      setRestaurants(result);
+    });
+  }, []);
+
   return (
     <>
       <LoggedInNav showCart={showCart} linkTo="/food-order/cart" />
@@ -112,7 +130,7 @@ const FoodOrderPage = () => {
                     </div>
                   </div>
                   <div className="forward-arrow">
-                    <Link to="/menu">
+                    <Link to={`/menu/${restaurant.managerid}`}>
                       <img src={backArrow} alt="" width="30px" />
                     </Link>
                   </div>

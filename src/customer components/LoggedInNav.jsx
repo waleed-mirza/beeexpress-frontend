@@ -6,10 +6,14 @@ import logo from "../images/Logo.svg";
 
 //Importing other packages
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 //Importing Components
 
 const LoggedInNav = ({ showCart, linkTo, hideCart }) => {
+  const logoutUser = () => {
+    localStorage.setItem("userLogout", "1");
+  };
   return (
     <div className="navStyle">
       <img src={logo} alt="" width="200px" />
@@ -22,6 +26,13 @@ const LoggedInNav = ({ showCart, linkTo, hideCart }) => {
         </Link>
         <Link to="/contact" style={{ textDecoration: "none" }}>
           <li>Contact</li>
+        </Link>
+        <Link
+          to="/newlogin"
+          onClick={logoutUser}
+          style={{ textDecoration: "none" }}
+        >
+          <li>Logout</li>
         </Link>
       </ul>
       <div className="profile">

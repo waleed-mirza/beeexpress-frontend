@@ -1,5 +1,5 @@
 // import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 // Importing Components
@@ -39,7 +39,7 @@ function App() {
 
             {/* Food Order Components */}
             <Route path="/food-order" component={FoodOrderPage} />
-            <Route path="/menu" component={Menu} />
+            <Route path="/menu/:id" component={Menu} />
             {/* <Route path="/menu/cart" component={Cart} /> */}
             <Route path="/checkout" component={Checkout} />
 

@@ -42,6 +42,8 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         setLoginStatus(true);
         localStorage.setItem("email", res.data.email);
+        localStorage.setItem("userrole", res.data.result.userrole);
+
         console.log(res.data.email);
         window.location = "/";
       }
@@ -58,16 +60,27 @@ const Login = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/auth/login").then((res) => {
-      if (res.data.loggedIn == true) {
-        // const result = res.data.user.user.email;
-        setLoginStatus(true);
+    if (localStorage.getItem("userLogout") === "1") {
+      axios.get("http://localhost:5000/auth/logout").then((res) => {
+        console.log(res.data);
+        localStorage.removeItem("token");
+        localStorage.removeItem("email");
+        localStorage.removeItem("userrole");
 
-        window.location = "/";
-      } else {
-        console.log("Not logged in");
-      }
-    });
+        localStorage.setItem("userLogout", "0");
+      });
+    } else {
+      axios.get("http://localhost:5000/auth/login").then((res) => {
+        if (res.data.loggedIn == true) {
+          setLoginStatus(true);
+
+          console.log(res.data);
+          window.location = "/";
+        } else {
+          console.log("Not logged in");
+        }
+      });
+    }
   }, []);
 
   return (

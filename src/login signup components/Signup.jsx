@@ -38,17 +38,17 @@ export default class SignUp extends Component {
         <form>
           <h3>Sign Up</h3>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>Email</label>
             <input type="email" className="form-control" placeholder="email" />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>Name</label>
             <input type="text" className="form-control" placeholder="Name" />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>Confirm Password</label>
             <input
               type="password"
@@ -57,7 +57,7 @@ export default class SignUp extends Component {
             />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>Password</label>
             <input
               type="password"
@@ -66,7 +66,7 @@ export default class SignUp extends Component {
             />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>Mobile Number</label>
             <input
               type="password"
@@ -75,7 +75,7 @@ export default class SignUp extends Component {
             />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>City</label>
             <input
               type="text"
@@ -84,7 +84,7 @@ export default class SignUp extends Component {
             />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>CNIC</label>
             <input
               type="password"
@@ -93,7 +93,7 @@ export default class SignUp extends Component {
             />
           </div>
 
-          <div className="form-group" className="login" className="signup">
+          <div className="form-group">
             <label>Upload Document</label>
             <input
               type="text"

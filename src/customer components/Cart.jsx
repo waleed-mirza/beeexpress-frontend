@@ -11,7 +11,7 @@ const hideCart = () => {
   element.classList.add("cart-hide");
 };
 
-const Cart = ({ linkTo }) => {
+const Cart = ({ linkTo, cartItemsAddition, length }) => {
   return (
     <>
       <div id="cart" className="cart-hide">
@@ -21,7 +21,7 @@ const Cart = ({ linkTo }) => {
           </button>
         </Link>
         <h1>Cart</h1>
-        <CartItems />
+        <CartItems cartItemsAddition={cartItemsAddition} length={length} />
 
         <Link to="/checkout" style={{ textDecoration: "none" }}>
           <div className="checkout-button">
