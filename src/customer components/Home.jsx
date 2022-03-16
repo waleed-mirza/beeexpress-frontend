@@ -22,7 +22,7 @@ const Home = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userrole, setUserrole] = useState("");
   function checkLoggedIn() {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token") && localStorage.getItem("userrole")) {
       setLoggedIn(true);
     }
   }
@@ -38,7 +38,7 @@ const Home = () => {
     setUserrole(localStorage.getItem("userrole"));
   }, []);
 
-  if (userrole == "customer")
+  if (userrole === "customer") {
     return (
       <>
         {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
@@ -109,15 +109,15 @@ const Home = () => {
             width="400px"
           />
         </div>
-        <Cart linkTo="/" />
       </>
     );
-  else if (userrole === "manager") {
+  } else if (userrole === "manager") {
     window.location.href = "/add-menu";
     return <div>hello</div>;
-  } else {
-    return <div>hello</div>;
+  } else if (!userrole && loggedIn === "false") {
     window.location.href = "/newlogin";
+  } else {
+    return <div>Application is not Working</div>;
   }
 };
 

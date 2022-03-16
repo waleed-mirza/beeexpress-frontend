@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import { CheckEmail, Toast } from "./validationError/Checks";
 
 // Importing other packages
 import { Link } from "react-router-dom";
@@ -27,42 +29,52 @@ const Login = () => {
   };
   const userSubmit = (e) => {
     e.preventDefault();
-    const displayUser = {
-      email: user.email,
-      password: user.password,
-    };
 
-    // console.log(displayUser);
-    axios.post("http://localhost:5000/auth/login", displayUser).then((res) => {
-      if (!res.data.auth) {
-        setLoginStatus(false);
-        // Display error message
-        // setLoginStatus(res.data.message);
-      } else {
-        localStorage.setItem("token", res.data.token);
-        setLoginStatus(true);
-        localStorage.setItem("email", res.data.email);
-        localStorage.setItem("userrole", res.data.result.userrole);
+    console.log(user.email, user.password);
+    if (user.email === "" || user.password === "") {
+      Toast("Some Fields are Empty", "error");
+    } else if (CheckEmail(user.email)) {
+      const displayUser = {
+        email: user.email,
+        password: user.password,
+      };
 
-        console.log(res.data.email);
-        window.location = "/";
-      }
-    });
-    axios
-      .get("http://localhost:5000/posts", {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
+      // console.log(displayUser);
+      axios
+        .post("http://localhost:5000/auth/login", displayUser)
+        .then((res) => {
+          if (!res.data.auth) {
+            setLoginStatus(false);
+            Toast("Email/Password not correct", "error");
+          } else {
+            localStorage.setItem("token", res.data.token);
+            setLoginStatus(true);
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("userrole", res.data.result.userrole);
+
+            console.log(res.data.email);
+            Toast("Congrats! Logged In", "success");
+            window.location = "/";
+          }
+        });
+      axios
+        .get("http://localhost:5000/posts", {
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } else {
+      Toast("Email is not correct", "error");
+    }
   };
 
   useEffect(() => {
     if (localStorage.getItem("userLogout") === "1") {
       axios.get("http://localhost:5000/auth/logout").then((res) => {
-        console.log(res.data);
+        Toast("Logged Out", "success");
         localStorage.removeItem("token");
         localStorage.removeItem("email");
         localStorage.removeItem("userrole");
@@ -73,8 +85,7 @@ const Login = () => {
       axios.get("http://localhost:5000/auth/login").then((res) => {
         if (res.data.loggedIn == true) {
           setLoginStatus(true);
-
-          console.log(res.data);
+          Toast("Already Logged In", "success");
           window.location = "/";
         } else {
           console.log("Not logged in");
@@ -112,6 +123,17 @@ const Login = () => {
           <div>{loginStatus && <button>Check if authenticated</button>}</div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

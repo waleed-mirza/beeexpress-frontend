@@ -10,7 +10,7 @@ import axios from "axios";
 
 //Importing Components
 
-const LoggedInNav = ({ showCart, linkTo, hideCart }) => {
+const LoggedInNav = ({ showCart, hideCart }) => {
   const logoutUser = () => {
     localStorage.setItem("userLogout", "1");
   };
@@ -39,7 +39,7 @@ const LoggedInNav = ({ showCart, linkTo, hideCart }) => {
         <h1>Profile-{localStorage.getItem("email")}</h1>
       </div>
       <div className="nav-buttons">
-        <Link to={linkTo} style={{ textDecoration: "none" }}>
+        <Link style={{ textDecoration: "none" }}>
           <button className="cart-btn" style={hideCart}>
             <i className="fa fa-shopping-cart" onClick={showCart}></i>
           </button>

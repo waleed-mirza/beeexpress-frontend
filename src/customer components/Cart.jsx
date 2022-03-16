@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // Importing other packages
 import { Link } from "react-router-dom";
@@ -11,17 +11,24 @@ const hideCart = () => {
   element.classList.add("cart-hide");
 };
 
-const Cart = ({ linkTo, cartItemsAddition, length }) => {
+const Cart = ({ cartItemsAddition, length, setCartItemsAddition }) => {
+  useEffect(() => {
+    console.log(cartItemsAddition);
+  }, [length]);
   return (
     <>
       <div id="cart" className="cart-hide">
-        <Link to={linkTo} style={{ textDecoration: "none" }}>
+        <Link style={{ textDecoration: "none" }}>
           <button className="close-btn">
             <i className="fa fa-times" onClick={hideCart}></i>
           </button>
         </Link>
         <h1>Cart</h1>
-        <CartItems cartItemsAddition={cartItemsAddition} length={length} />
+        <CartItems
+          cartItemsAddition={cartItemsAddition}
+          setCartItemsAddition={setCartItemsAddition}
+          length={length}
+        />
 
         <Link to="/checkout" style={{ textDecoration: "none" }}>
           <div className="checkout-button">

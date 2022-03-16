@@ -1,6 +1,8 @@
 // import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import { useEffect, useState } from "react";
 
 // Importing Components
 import Nav from "./customer components/Nav";
@@ -27,6 +29,8 @@ import newSignup from "./customer components/Signup";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+  const [cartItemsAddition, setCartItemsAddition] = useState([]);
+
   return (
     <>
       <Router>
@@ -38,15 +42,29 @@ function App() {
             <Route path="/option" component={Option} />
 
             {/* Food Order Components */}
-            <Route path="/food-order" component={FoodOrderPage} />
-            <Route path="/menu/:id" component={Menu} />
+            <Route path="/food-order">
+              <FoodOrderPage
+                cartItemsAddition={cartItemsAddition}
+                setCartItemsAddition={setCartItemsAddition}
+              />
+            </Route>
+            <Route path="/menu/:id">
+              <Menu
+                cartItemsAddition={cartItemsAddition}
+                setCartItemsAddition={setCartItemsAddition}
+              />
+            </Route>
             {/* <Route path="/menu/cart" component={Cart} /> */}
-            <Route path="/checkout" component={Checkout} />
+            <Route path="/checkout">
+              <Checkout
+                cartItemsAddition={cartItemsAddition}
+                setCartItemsAddition={setCartItemsAddition}
+              />
+            </Route>
 
             {/* Hall Booking Components */}
             <Route path="/book-halls" component={BookHallsPage} />
             <Route path="/marquee" component={Marquee} />
-            <Route path="/checkout" component={Checkout} />
 
             {/* Adding Menu Components */}
             <Route path="/add-menu" component={AddMenu} />
@@ -57,6 +75,11 @@ function App() {
             <Route path="/signup" component={Signup} />
             <Route path="/newsignup" component={newSignup} />
           </Switch>
+          <Cart
+            cartItemsAddition={cartItemsAddition}
+            setCartItemsAddition={setCartItemsAddition}
+            length={cartItemsAddition.length}
+          />
         </div>
       </Router>
       <div className="custom-footer">

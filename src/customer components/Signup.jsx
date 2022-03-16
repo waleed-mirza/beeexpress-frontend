@@ -6,6 +6,8 @@ import axios from "axios";
 
 //Importing Images
 import logo from "../images/Logo.svg";
+import { CheckEmail, Toast } from "./validationError/Checks";
+import { ToastContainer } from "react-toastify";
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -24,22 +26,44 @@ const Signup = () => {
   };
   const userSubmit = (e) => {
     e.preventDefault();
-    const displayUser = {
-      email: user.email,
-      password: user.password,
-      name: user.name,
-      mobilenumber: user.mobilenumber,
-      city: user.city,
-      CNIC: user.CNIC,
-      userrole: user.userrole,
-    };
 
-    window.location = "/newlogin";
-    axios
-      .post("http://localhost:5000/auth/register", displayUser)
-      .then((res) => {
-        console.log(res.data);
-      });
+    if (
+      user.email === "" ||
+      user.mobilenumber === "" ||
+      user.city === "" ||
+      user.CNIC === "" ||
+      user.userrole === "" ||
+      user.name === "" ||
+      user.password === ""
+    ) {
+      Toast("Some Fields are Empty", "error");
+    } else if (CheckEmail(user.email)) {
+      const displayUser = {
+        email: user.email,
+        password: user.password,
+        name: user.name,
+        mobilenumber: user.mobilenumber,
+        city: user.city,
+        CNIC: user.CNIC,
+        userrole: user.userrole,
+      };
+
+      axios
+        .post("http://localhost:5000/auth/register", displayUser)
+        .then((res) => {
+          console.log(res.status, "status");
+
+          const { status, message } = res.data;
+          if (status === "ok") {
+            Toast(message, "success");
+            window.location = "/newlogin";
+          } else {
+            Toast(message, "error");
+          }
+        });
+    } else {
+      Toast("Email is not correct", "error");
+    }
   };
 
   return (
@@ -163,6 +187,17 @@ const Signup = () => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

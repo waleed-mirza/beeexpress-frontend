@@ -63,7 +63,7 @@ const showCart = () => {
   element.classList.add("cart");
 };
 
-const FoodOrderPage = () => {
+const FoodOrderPage = ({ cartItemsAddition, setCartItemsAddition }) => {
   const [restaurants, setRestaurants] = useState([]);
   useEffect(() => {
     axios({
@@ -83,7 +83,7 @@ const FoodOrderPage = () => {
 
   return (
     <>
-      <LoggedInNav showCart={showCart} linkTo="/food-order/cart" />
+      <LoggedInNav showCart={showCart} linkTo="/menu/cart" />
       <div className="main-section">
         <img
           src={hiveBackdrop}
@@ -146,7 +146,12 @@ const FoodOrderPage = () => {
           </div>
         </div>
       </div>
-      <Cart linkTo="/food-order" />
+      {/* <Cart
+        linkTo="/food-order"
+        cartItemsAddition={cartItemsAddition}
+        setCartItemsAddition={setCartItemsAddition}
+        length={cartItemsAddition.length}
+      /> */}
     </>
   );
 };

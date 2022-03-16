@@ -4,7 +4,8 @@ import axios from "axios";
 import AddCategory from "./AddCategory";
 import LoggedInNav from "./LoggedInNav";
 import AddRestaurant from "./AddRestaurant";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { Toast } from "./validationError/Checks";
 
 const AddMenu = () => {
   const [menu, setMenu] = useState({
@@ -70,30 +71,33 @@ const AddMenu = () => {
   };
   const menuSubmit = (e) => {
     e.preventDefault();
-    const displayMenu = {
-      ...menu,
-      category: menu.category,
-      menuitem: menu.menuitem,
-      price: menu.price,
-      managerid: userId,
-    };
+    if (menu.category && menu.menuitem && menu.price) {
+      const displayMenu = {
+        ...menu,
+        category: menu.category,
+        menuitem: menu.menuitem,
+        price: menu.price,
+        managerid: userId,
+      };
 
-    console.log(displayMenu);
-    // window.location = "/";
-    axios
-      .post("http://localhost:5000/menu/add", displayMenu)
-      .then((res) => {
-        setMenu({
-          category: "",
-          menuitem: "",
-          price: null,
-          categories: [],
-        });
+      axios
+        .post("http://localhost:5000/menu/add", displayMenu)
+        .then((res) => {
+          setMenu({
+            category: "",
+            menuitem: "",
+            price: null,
+            categories: [],
+          });
+          Toast("Menu item is added", "success");
 
-        setCheckflag(!checkflag);
-        console.log(menu);
-      })
-      .catch((err) => console.log(err));
+          setCheckflag(!checkflag);
+          console.log(menu);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      Toast("Some Menu item fields are empty", "error");
+    }
   };
   if (userrole === "manager") {
     return (
@@ -163,13 +167,22 @@ const AddMenu = () => {
             {/* <p>{JSON.stringify(menu)}</p> */}
           </div>
         </div>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </>
     );
-  } else {
-    if (localStorage.getItem(userrole) === "customer")
-      window.location.href = "/newlogin";
-    return <div>hello</div>;
-  }
+  } else if (userrole === "customer") {
+    window.location.href = "/newlogin";
+  } else return <div>hello</div>;
 };
 
 export default AddMenu;

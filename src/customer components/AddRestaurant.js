@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { Toast } from "./validationError/Checks";
 
 const AddRestaurant = ({ checkflag, setCheckflag }) => {
   useEffect(() => {
@@ -29,6 +30,7 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
   });
   const [userId, setUserId] = useState(0);
   const [restaurantName, setRestaurantName] = useState("");
+
   const setResaurant = (e) => {
     // setMenu({ ...menu, category: e.target.value });
     setRes({ restaurant: e.target.value });
@@ -36,19 +38,21 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
   const restaurantsubmit = (e) => {
     e.preventDefault();
 
-    const displayRestaurant = {
-      restaurant: res.restaurant,
-      managerid: userId,
-    };
-
-    console.log(displayRestaurant);
-    // window.location = "/";
-    axios
-      .post("http://localhost:5000/restaurant/add", displayRestaurant)
-      .then((res) => {
-        console.log(res.data);
-        setCheckflag(!checkflag);
-      });
+    if (res.restaurant === "") {
+      Toast("Enter Restaurant Name", "error");
+    } else {
+      const displayRestaurant = {
+        restaurant: res.restaurant,
+        managerid: userId,
+      };
+      axios
+        .post("http://localhost:5000/restaurant/add", displayRestaurant)
+        .then((res) => {
+          console.log(res.data);
+          Toast("Name Registered", "success");
+          setCheckflag(!checkflag);
+        });
+    }
   };
   if (!restaurantName) {
     return (
@@ -72,15 +76,25 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
             </div>
           </form>
         </div>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </>
     );
-  } else {
-    return (
-      <div className="text-uppercase font-weight-bold display-3">
-        {restaurantName}
-      </div>
-    );
   }
+  return (
+    <div className="text-uppercase font-weight-bold display-3">
+      {restaurantName}
+    </div>
+  );
 };
 
 export default AddRestaurant;

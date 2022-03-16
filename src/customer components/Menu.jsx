@@ -101,7 +101,8 @@ const Menu = (props) => {
   const [menu, setMenu] = useState([]);
   const [cat, setCat] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
-  const [cartItemsAddition, setCartItemsAddition] = useState([]);
+  const { cartItemsAddition, setCartItemsAddition } = props;
+  // const [cartItemsAddition, setCartItemsAddition] = useState([]);
   useEffect(() => {
     const param = window.location.pathname.split("/")[2];
 
@@ -220,21 +221,39 @@ const Menu = (props) => {
                 className="fa fa-plus-square"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  let temp = categories;
-                  setCartItemsAddition([...cartItemsAddition, temp]);
-                  let temp1 = length + 1;
-                  setLength(temp1);
+                  let check = 0;
+                  let tempId = categories._id;
+                  if (cartItemsAddition) {
+                    for (
+                      let index = 0;
+                      index < cartItemsAddition.length;
+                      index++
+                    ) {
+                      if (cartItemsAddition[index]._id === tempId) {
+                        check = 1;
+                        break;
+                      }
+                    }
+                  }
+                  if (check === 0) {
+                    let temp = categories;
+                    temp.count = 1;
+                    setCartItemsAddition([...cartItemsAddition, temp]);
+                    let temp1 = length + 1;
+                    setLength(temp1);
+                  }
                 }}
               ></i>
             </div>
           ))}
         </div>
       </div>
-      <Cart
+      {/* <Cart
         linkTo="/food-order"
         cartItemsAddition={cartItemsAddition}
+        setCartItemsAddition={setCartItemsAddition}
         length={length}
-      />
+      /> */}
     </>
   );
 };

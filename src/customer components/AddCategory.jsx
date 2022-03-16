@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { Toast } from "./validationError/Checks";
 
 const AddCategory = ({ checkflag, setCheckflag }) => {
   const [cat, setCat] = useState({
@@ -25,23 +26,26 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
   };
   const categorySubmit = (e) => {
     e.preventDefault();
-    const displayCategory = {
-      category: cat.category,
-      managerid: userId,
-    };
 
-    console.log(displayCategory);
-    // window.location = "/";
-    axios
-      .post("http://localhost:5000/category/add", displayCategory)
-      .then((res) => {
-        console.log(res.data);
-        setCat({
-          category: "",
+    if (cat.category) {
+      const displayCategory = {
+        category: cat.category,
+        managerid: userId,
+      };
+
+      axios
+        .post("http://localhost:5000/category/add", displayCategory)
+        .then((res) => {
+          Toast("category added successfully", "success");
+          setCat({
+            category: "",
+          });
+          setCheckflag(!checkflag);
+          setInputcheck(!inputcheck);
         });
-        setCheckflag(!checkflag);
-        setInputcheck(!inputcheck);
-      });
+    } else {
+      Toast("Enter the category", "error");
+    }
   };
   return (
     <>
@@ -64,6 +68,17 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
           </div>
         </form>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };
