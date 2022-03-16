@@ -6,6 +6,13 @@ import LoggedInNav from "./LoggedInNav";
 // Importing Images
 import marqueeBg from "../images/Marquee BG.svg";
 import backArrow from "../images/Back Arrow.svg";
+import one from "../images/1.jpg";
+import two from "../images/1.jpeg";
+import three from "../images/2.jpeg";
+import four from "../images/3.jpeg";
+import five from "../images/4.jpeg";
+import six from "../images/5.jpeg";
+import seven from "../images/6.jpeg";
 
 // Importing other packages
 import { Link } from "react-router-dom";
@@ -16,36 +23,42 @@ const marquees = [
     name: "Marhaba",
     capacity: 100,
     parkingSpace: 50,
+    image: one,
   },
   {
     id: 2,
     name: "Ghafoor",
     capacity: 200,
     parkingSpace: 70,
+    image: two,
   },
   {
     id: 3,
     name: "Helix",
     capacity: 300,
     parkingSpace: 170,
+    image: three,
   },
   {
     id: 4,
     name: "Greenland",
     capacity: 150,
     parkingSpace: 55,
+    image: seven,
   },
   {
     id: 5,
     name: "Sikandar",
     capacity: 190,
     parkingSpace: 47,
+    image: six,
   },
   {
     id: 6,
     name: "Billay",
     capacity: 130,
     parkingSpace: 34,
+    image: marqueeBg,
   },
 ];
 
@@ -79,7 +92,7 @@ const BookHallsPage = () => {
             {marquees.map((marquee) => (
               <div className="card">
                 <div className="card-image">
-                  <img src={marqueeBg} alt="" width="100%" />
+                  <img src={marquee.image} alt="" width="100%" />
                   <h1>{marquee.name}</h1>
                 </div>
                 <div className="card-info">

@@ -5,11 +5,20 @@ import LoggedInNav from "./LoggedInNav";
 
 // Importing Images
 import marqueeBg from "../images/Marquee BG.svg";
+
 import backArrow from "../images/Back Arrow.svg";
 
 // Importing other packages
 import { Link } from "react-router-dom";
+import one from "../images/1.jpg";
+import two from "../images/1.jpeg";
+import three from "../images/2.jpeg";
+import four from "../images/3.jpeg";
+import five from "../images/4.jpeg";
+import six from "../images/5.jpeg";
+import seven from "../images/6.jpeg";
 
+const images = ["/static/media/1.jpg"];
 const Marquee = () => {
   return (
     <>
@@ -45,44 +54,24 @@ const Marquee = () => {
             </div>
             <div className="marquee-services-card">
               <i className="fa fa-check-square"></i>
-              <p>Music System</p>
+              <p>Air Conditioning</p>
             </div>
             <div className="marquee-services-card">
               <i className="fa fa-check-square"></i>
-              <p>Music System</p>
-            </div>
-            <div className="marquee-services-card">
-              <i className="fa fa-check-square"></i>
-              <p>Music System</p>
-            </div>
-            <div className="marquee-services-card">
-              <i className="fa fa-check-square"></i>
-              <p>Music System</p>
-            </div>
-            <div className="marquee-services-card">
-              <i className="fa fa-check-square"></i>
-              <p>Music System</p>
-            </div>
-            <div className="marquee-services-card">
-              <i className="fa fa-check-square"></i>
-              <p>Music System</p>
-            </div>
-            <div className="marquee-services-card">
-              <i className="fa fa-check-square"></i>
-              <p>Music System</p>
+              <p>Customize Decor</p>
             </div>
           </div>
         </div>
         <div className="marquee-gallery">
           <h1>Venue Gallery</h1>
           <div className="marquee-images">
-            <img src={marqueeBg} alt="" width="350px" />
-            <img src={marqueeBg} alt="" width="350px" />
-            <img src={marqueeBg} alt="" width="350px" />
-            <img src={marqueeBg} alt="" width="350px" />
-            <img src={marqueeBg} alt="" width="350px" />
-            <img src={marqueeBg} alt="" width="350px" />
-            <img src={marqueeBg} alt="" width="350px" />
+            <img src={one} alt="" width="350px" />
+            <img src={two} alt="" width="350px" />
+            <img src={three} alt="" width="350px" />
+            <img src={four} alt="" width="350px" />
+            <img src={five} alt="" width="350px" />
+            <img src={six} alt="" width="350px" />
+            <img src={seven} alt="" width="350px" />
             <img src={marqueeBg} alt="" width="350px" />
           </div>
         </div>
