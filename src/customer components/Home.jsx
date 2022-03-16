@@ -36,6 +36,9 @@ const Home = () => {
   useEffect(() => {
     checkLoggedIn();
     setUserrole(localStorage.getItem("userrole"));
+    if (!localStorage.getItem("userrole")) {
+      window.location.href = "/newsignup";
+    }
   }, []);
 
   if (userrole === "customer") {
@@ -81,7 +84,9 @@ const Home = () => {
                 anymore, just place the order <br /> through this website and
                 pick it on the way
               </p>
-              <button className="button-style card-button">Start Now</button>
+              <Link to="/food-order" style={{ textDecoration: "none" }}>
+                <button className="button-style card-button">Start Now</button>
+              </Link>
             </div>
             <div className="custom-card">
               <img src={reserveCardImage} alt="" width="300px" />
@@ -90,7 +95,9 @@ const Home = () => {
                 Reserve a table of your favourite restaurant <br /> from here so
                 you don't have to worry <br /> about it later
               </p>
-              <button className="button-style card-button ">Start Now</button>
+              <Link to="/food-order" style={{ textDecoration: "none" }}>
+                <button className="button-style card-button ">Start Now</button>
+              </Link>
             </div>
             <div className="custom-card">
               <img src={bookCardImage} alt="" width="300px" />
@@ -99,7 +106,9 @@ const Home = () => {
                 Looking for a marquee/hall to celebrate an <br /> event? Find
                 best marquee/halls in your city <br /> at reasonable rates
               </p>
-              <button className="button-style card-button">Book Now</button>
+              <Link to="/book-halls" style={{ textDecoration: "none" }}>
+                <button className="button-style card-button">Book Now</button>
+              </Link>
             </div>
           </div>
           <img
@@ -117,7 +126,7 @@ const Home = () => {
   } else if (!userrole && loggedIn === "false") {
     window.location.href = "/newlogin";
   } else {
-    return <div>Application is not Working</div>;
+    return <div>Application is in processing</div>;
   }
 };
 

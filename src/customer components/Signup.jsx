@@ -172,7 +172,7 @@ const Signup = () => {
                       value="manager"
                     />
                     <label class="form-check-label" htmlFor="inlineRadio2">
-                      Manager
+                      Owner
                     </label>
                   </div>
                 </div>
