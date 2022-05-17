@@ -32,7 +32,7 @@ const Option = () => {
         </div>
         <div className="options">
           <div className="option-1">
-            <img src={foodOrderBg} alt="" width="400px" />
+            <img src={foodOrderBg} alt="" width="350px" />
             <div className="option-1-content">
               <h1>Food Order</h1>
               <img src={foodOrderSeparator} alt="" width="100px" />
@@ -51,7 +51,7 @@ const Option = () => {
             </div>
           </div>
           <div className="option-2">
-            <img src={bookHallBg} alt="" width="400px" />
+            <img src={bookHallBg} alt="" width="350px" />
             <div className="option-2-content">
               <h1>Book Hall</h1>
               <img src={bookHallSeparator} alt="" width="100px" />
@@ -60,6 +60,25 @@ const Option = () => {
                 time
               </p>
               <Link to="/book-halls">
+                <img
+                  className="front-arrow"
+                  src={backArrow}
+                  alt=""
+                  width="35px"
+                />
+              </Link>
+            </div>
+          </div>
+          <div className="option-3">
+            <img src={bookHallBg} alt="" width="350px" />
+            <div className="option-3-content">
+              <h1>Book Marquee</h1>
+              <img src={bookHallSeparator} alt="" width="100px" />
+              <p>
+                Browse through Marquees that are available at your desired date
+                and time
+              </p>
+              <Link to="/book-marquees">
                 <img
                   className="front-arrow"
                   src={backArrow}

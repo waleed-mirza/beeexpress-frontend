@@ -47,7 +47,6 @@ const Signup = () => {
         CNIC: user.CNIC,
         userrole: user.userrole,
       };
-
       axios
         .post("http://localhost:5000/auth/register", displayUser)
         .then((res) => {
@@ -148,31 +147,44 @@ const Signup = () => {
                     value={user.city}
                   />
                 </div>
-                <div class="form-group mt-5">
-                  <div class="form-check form-check-inline">
+                <div className="form-group mt-5">
+                  <div className="form-check form-check-inline">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="userrole"
                       id="inlineRadio1"
                       onChange={handleInputChange}
                       value="customer"
                     />
-                    <label class="form-check-label" htmlFor="inlineRadio1">
+                    <label className="form-check-label" htmlFor="inlineRadio1">
                       Customer
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="userrole"
                       id="inlineRadio2"
                       onChange={handleInputChange}
                       value="manager"
                     />
-                    <label class="form-check-label" htmlFor="inlineRadio2">
+                    <label className="form-check-label" htmlFor="inlineRadio2">
                       Owner
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="userrole"
+                      id="inlineRadio3"
+                      onChange={handleInputChange}
+                      value="admin@admin"
+                    />
+                    <label className="form-check-label" htmlFor="inlineRadio3">
+                      Admin
                     </label>
                   </div>
                 </div>

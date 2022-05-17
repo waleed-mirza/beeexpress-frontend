@@ -136,12 +136,10 @@ html {
 }
 
 .custom-footer {
-  position: absolute;
-  /* left: 0; */
-  bottom: 0;
   width: 100%;
   text-align: center;
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 /* About Section */
@@ -226,16 +224,18 @@ html {
 .options {
   margin: 50px 0px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .option-1,
-.option-2 {
+.option-2,
+.option-3 {
   position: relative;
   text-align: center;
 }
 .option-1-content,
-.option-2-content {
+.option-2-content,
+.option-3-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -243,22 +243,35 @@ html {
 }
 
 .option-1-content h1,
-.option-2-content h1 {
-  padding-top: 50px;
-  font-size: 40px;
+.option-2-content h1,
+.option-3-content h1 {
+  padding-top: 60px;
+  font-size: 20px;
 }
 .option-1-content p,
-.option-2-content p {
+.option-2-content p,
+.option-3-content p {
   font-size: 20px;
   font-weight: 500;
   opacity: 0.8;
-  margin-top: 30px;
+  margin-top: 40px;
   line-height: 30px;
 }
+
 .front-arrow {
   transform: rotate(180deg);
   margin-top: 30px;
   margin-bottom: 30px;
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
 /* edited */
+
+.row-action {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.row-action:hover {
+  background-color: #ffc400;
+}

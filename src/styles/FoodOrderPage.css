@@ -675,3 +675,18 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+/* custom */
+.delete-img-btn {
+  position: absolute;
+  right: 0px;
+  top: -18px;
+  font-weight: bolder;
+  font-size: 15px;
+  z-index: 9999;
+  color: black;
+  cursor: pointer;
+}
+.venue-detail-list-item {
+  cursor: pointer;
+}

@@ -6,7 +6,7 @@ export const CheckEmail = (email) => {
   return email.match(re);
 };
 
-export const Toast = (message, action) => {
+export const Toast = (action, message) => {
   if (action === "success") {
     return toast.success(message, {
       position: "bottom-center",
@@ -28,4 +28,10 @@ export const Toast = (message, action) => {
       progress: undefined,
     });
   }
+};
+
+export const showCart = () => {
+  var element = document.getElementById("cart");
+  element.classList.remove("cart-hide");
+  element.classList.add("cart");
 };

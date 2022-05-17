@@ -18,11 +18,11 @@ const Cart = ({ cartItemsAddition, length, setCartItemsAddition }) => {
   return (
     <>
       <div id="cart" className="cart-hide">
-        <Link style={{ textDecoration: "none" }}>
+        <div style={{ textDecoration: "none" }}>
           <button className="close-btn">
             <i className="fa fa-times" onClick={hideCart}></i>
           </button>
-        </Link>
+        </div>
         <h1>Cart</h1>
         <CartItems
           cartItemsAddition={cartItemsAddition}

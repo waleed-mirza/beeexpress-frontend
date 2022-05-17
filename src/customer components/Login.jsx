@@ -51,20 +51,12 @@ const Login = () => {
             setLoginStatus(true);
             localStorage.setItem("email", res.data.email);
             localStorage.setItem("userrole", res.data.result.userrole);
+            localStorage.setItem("beeid", res.data.result._id);
 
-            console.log(res.data.email);
+            console.log(res.data.result);
             Toast("Congrats! Logged In", "success");
             window.location = "/";
           }
-        });
-      axios
-        .get("http://localhost:5000/posts", {
-          headers: {
-            "x-access-token": localStorage.getItem("token"),
-          },
-        })
-        .then((res) => {
-          console.log(res);
         });
     } else {
       Toast("Email is not correct", "error");

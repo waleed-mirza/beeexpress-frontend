@@ -50,7 +50,7 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
   return (
     <>
       <div className="category-section">
-        <h1>Add categ</h1>
+        <h1>Add category</h1>
         <form onSubmit={categorySubmit}>
           <div className="col-1">
             <div className="row-1">

@@ -18,7 +18,7 @@ import bookCardImage from "../images/Book Hall.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Home = () => {
+const Home = ({ adminCheck }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userrole, setUserrole] = useState("");
   function checkLoggedIn() {
@@ -125,6 +125,8 @@ const Home = () => {
     return <div>hello</div>;
   } else if (!userrole && loggedIn === "false") {
     window.location.href = "/newlogin";
+  } else if (adminCheck === true) {
+    window.location.href = "/admin-view";
   } else {
     return <div>Application is in processing</div>;
   }

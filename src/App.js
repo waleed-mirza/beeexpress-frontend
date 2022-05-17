@@ -27,20 +27,89 @@ import newSignup from "./customer components/Signup";
 
 // Importing Other Packages
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import AddMarquee from "./customer components/AddMarquee";
+import axios from "axios";
+import EventOrder from "./customer components/EventOrder";
+import CustomerProtectedRoute from "./customer components/protectedRoutes/CustomerProtectedRoute";
+import ManagerProtectedRoute from "./customer components/protectedRoutes/ManagerProtectedRoute";
+import AdminProtectedRoute from "./customer components/protectedRoutes/AdminProtectedRoute";
+
+import { ToastContainer } from "react-toastify";
+import ManagerOrders from "./customer components/ManagerOrders";
+import AdminDashboard from "./customer components/AdminDashboard";
+import { useHistory } from "react-router-dom";
 
 function App() {
+  const history = useHistory();
+  const [adminCheck, setAdminCheck] = useState(false);
   const [cartItemsAddition, setCartItemsAddition] = useState([]);
+  const [userInformation, setUserInformation] = useState({
+    userId: 0,
+    userRole: "",
+    loggedIn: false,
+  });
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/auth/checklogin", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (res.data.loggedIn === true) {
+          setUserInformation({
+            ...userInformation,
+            userId: res.data.id,
+            loggedIn: true,
+            userRole: localStorage.getItem("userrole"),
+          });
+          setAdminCheck(res.data.adminCheck);
+        }
+      });
+  }, []);
 
   return (
     <>
       <Router>
         <div className="App">
           <Switch>
-            <Route path="/" exact component={Home} />
+            {/* <Route path="/" exact component={Home} /> */}
+            <Route path="/" exact>
+              <Home adminCheck={adminCheck} />
+            </Route>
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/option" component={Option} />
 
+            {/* customer protected */}
+
+            <CustomerProtectedRoute
+              userInformation={userInformation}
+              component={EventOrder}
+              path="/event-order/:id"
+            />
+            <CustomerProtectedRoute
+              path="/marquee/:id"
+              component={Marquee}
+              userInformation={userInformation}
+            />
+
+            {/* customer protected */}
+            {/* Manager protected */}
+            <ManagerProtectedRoute
+              path="/manage-orders"
+              component={ManagerOrders}
+              userInformation={userInformation}
+            />
+            {/* Manager protected */}
+            {/* admin protected */}
+            <AdminProtectedRoute
+              path="/admin-view"
+              component={AdminDashboard}
+              userInformation={userInformation}
+              adminCheck={adminCheck}
+            />
+            {/* admin protected */}
             {/* Food Order Components */}
             <Route path="/food-order">
               <FoodOrderPage
@@ -63,17 +132,52 @@ function App() {
             </Route>
 
             {/* Hall Booking Components */}
-            <Route path="/book-halls" component={BookHallsPage} />
-            <Route path="/marquee" component={Marquee} />
+            <Route path="/book-halls">
+              <BookHallsPage place="hall" />
+            </Route>
+            <Route path="/book-marquees">
+              <BookHallsPage place="marquee" />
+            </Route>
 
             {/* Adding Menu Components */}
-            <Route path="/add-menu" component={AddMenu} />
+
+            <Route path="/add-menu">
+              <AddMenu
+                loggedIn={userInformation.loggedIn}
+                userrole={userInformation.userRole}
+                userId={userInformation.userId}
+              />
+            </Route>
 
             {/* Adding Login/Signup Components */}
             <Route path="/login" component={Login} />
             <Route path="/newlogin" component={newLogin} />
             <Route path="/signup" component={Signup} />
             <Route path="/newsignup" component={newSignup} />
+            <Route path="/add-marquee" exact>
+              <AddMarquee
+                userInformation={userInformation}
+                userEventCategory="marquee"
+              />
+            </Route>
+            <Route path="/add-hall" exact>
+              <AddMarquee
+                userInformation={userInformation}
+                userEventCategory="hall"
+              />
+            </Route>
+            <Route path="/add-marquee/:id" exact>
+              <AddMarquee
+                userInformation={userInformation}
+                userEventCategory="marquee"
+              />
+            </Route>
+            <Route path="/add-hall/:id" exact>
+              <AddMarquee
+                userInformation={userInformation}
+                userEventCategory="hall"
+              />
+            </Route>
           </Switch>
           <Cart
             cartItemsAddition={cartItemsAddition}
@@ -85,6 +189,17 @@ function App() {
       <div className="custom-footer">
         <p>© 2021 BeeExpress All Rights Reserved</p>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

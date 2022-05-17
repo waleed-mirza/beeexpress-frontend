@@ -39,11 +39,11 @@ const LoggedInNav = ({ showCart, hideCart }) => {
         <h1>Profile-{localStorage.getItem("email")}</h1>
       </div>
       <div className="nav-buttons">
-        <Link style={{ textDecoration: "none" }}>
+        <div style={{ textDecoration: "none" }}>
           <button className="cart-btn" style={hideCart}>
             <i className="fa fa-shopping-cart" onClick={showCart}></i>
           </button>
-        </Link>
+        </div>
       </div>
     </div>
   );

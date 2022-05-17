@@ -6,35 +6,19 @@ import LoggedInNav from "./LoggedInNav";
 import AddRestaurant from "./AddRestaurant";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "./validationError/Checks";
+import { Link } from "react-router-dom";
 
-const AddMenu = () => {
+const AddMenu = ({ loggedIn, userrole, userId }) => {
   const [menu, setMenu] = useState({
     category: "",
     menuitem: "",
     price: null,
     categories: [],
   });
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userrole, setUserrole] = useState("");
-  const [checkflag, setCheckflag] = useState(false);
-  const [userId, setUserId] = useState(0);
 
-  function checkLoggedIn() {
-    if (localStorage.getItem("token")) {
-      setLoggedIn(true);
-    }
-  }
+  const [checkflag, setCheckflag] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/auth/checklogin", {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        if (res.data.loggedIn === true) setUserId(res.data.id);
-      });
     axios
       .get("http://localhost:5000/category/")
       .then((response) => {
@@ -49,8 +33,7 @@ const AddMenu = () => {
       .catch((error) => {
         console.log("Error is" + error);
       });
-    checkLoggedIn();
-    setUserrole(localStorage.getItem("userrole"));
+    console.log(userrole, loggedIn, userId, "helooooooooooo");
   }, [checkflag]);
 
   const setCategory = (e) => {
@@ -107,7 +90,19 @@ const AddMenu = () => {
           <AddRestaurant setCheckflag={setCheckflag} checkflag={checkflag} />
           <AddCategory setCheckflag={setCheckflag} checkflag={checkflag} />
         </div>
-        <div className="w-100 row justify-content-center">
+        <div className="w-100 row justify-content-around">
+          <div className="d-flex flex-column justify-content-around">
+            <Link to="/add-marquee">
+              <button className="btn btn-primary">Add Marquee</button>
+            </Link>
+            <Link to="/add-hall">
+              <button className="btn btn-primary">Add Hall</button>
+            </Link>
+            <Link to="/manage-orders">
+              <button className="btn btn-primary">View Orders</button>
+            </Link>
+          </div>
+
           <div className="add-menu-section row justify-centent-center flex-column">
             <h1>Add Menu</h1>
 
@@ -117,14 +112,14 @@ const AddMenu = () => {
                   <div className="form-group">
                     <label htmlFor="">Categories:</label>
                     <select
-                      VALUE={menu.category}
+                      value={menu.category}
                       onChange={setCategory}
                       // className="form-control"
                     >
                       <option>Select below</option>
                       {menu.categories.map(function (singlecateg) {
                         return (
-                          <option key={singlecateg} VALUE={singlecateg}>
+                          <option key={singlecateg} value={singlecateg}>
                             {singlecateg}
                           </option>
                         );
@@ -134,14 +129,14 @@ const AddMenu = () => {
                   {/* <input
             id="category"
             type="text"
-            VALUE={menu.category}
+            value={menu.category}
             onChange={setCategory}
           /> */}
                   <div className="form-group">
                     <label htmlFor="">Item:</label>
                     <input
                       type="text"
-                      VALUE={menu.menuitem}
+                      value={menu.menuitem}
                       onChange={setMenuItem}
                     />
                   </div>
@@ -149,7 +144,7 @@ const AddMenu = () => {
                     <label htmlFor="">Price:</label>
                     <input
                       type="number"
-                      VALUE={menu.price}
+                      value={menu.price}
                       onChange={setPrice}
                     />
                   </div>
@@ -182,7 +177,14 @@ const AddMenu = () => {
     );
   } else if (userrole === "customer") {
     window.location.href = "/newlogin";
-  } else return <div>hello</div>;
+  }
+  return (
+    <div className="d-flex justify-content-center align-items-center mt-5">
+      <Link to="/newlogin">
+        <button className="btn btn-danger">Go to Login page</button>
+      </Link>
+    </div>
+  );
 };
 
 export default AddMenu;
