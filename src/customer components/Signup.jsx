@@ -187,6 +187,19 @@ const Signup = () => {
                       Admin
                     </label>
                   </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="userrole"
+                      id="inlineRadio4"
+                      onChange={handleInputChange}
+                      value="deliveryboy"
+                    />
+                    <label className="form-check-label" htmlFor="inlineRadio4">
+                      Delivery Boy
+                    </label>
+                  </div>
                 </div>
                 {/* <div className="form-group">
                   <label htmlFor="">Upload Documents</label>

@@ -6,6 +6,7 @@ import { Toast } from "../validationError/Checks";
 
 function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
   const [orderDetails, setOrderDetails] = useState([]);
+  const [filterValue, setFilterValue] = useState(filter);
   const [deleteRenderCheck, setDeleteRenderCheck] = useState(false);
   const [marqueeDetails, setMarqueeDetails] = useState([]);
   const isManager = userRole === "manager" ? true : false;
@@ -19,12 +20,13 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
     }).then((response) => {
       setMarqueeDetails(response.data.result);
     });
+    console.log(filterValue, "filter");
     axios({
       method: "POST",
       url: `${REQ_URL}eventorder/getorders`,
       data: {
         userid: userid,
-        filter: filter,
+        filter: filterValue,
         managerid: managerid,
       },
     }).then((response) => {
@@ -61,13 +63,42 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
       setDeleteRenderCheck(!deleteRenderCheck);
     });
   };
+  const handleFilterChange = (e) => {
+    setFilterValue(e.target.value);
+    setDeleteRenderCheck(!deleteRenderCheck);
+  };
   return (
     <div className="my-5 container table-responsive">
-      <h3 className="text-center my-3 font-weight-bold">Order Details</h3>
+      <div className="w-75 mx-auto">
+        <h3 className="text-center my-3 font-weight-bold">
+          Event Order Details
+        </h3>
+
+        <form>
+          <div className="form-group">
+            <label htmlFor="exampleFormControlSelect1">Select Filter</label>
+            <select
+              className="form-control"
+              id="exampleFormControlSelect1"
+              name="filter"
+              value={filterValue}
+              onChange={handleFilterChange}
+            >
+              <option value="" default>
+                Select Filter here
+              </option>
+              <option value="pending">Pending</option>
+              <option value="approve">Approve</option>
+              <option value="">All</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
       {!orderDetails?.length && (
         <div className="my-4 font-weight-bold text-center">No Orders Yet</div>
       )}
-      <table className="table table-striped">
+      <table className="table table-striped my-5">
         <thead>
           <tr>
             <th scope="col">#</th>

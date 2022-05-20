@@ -275,3 +275,67 @@ html {
 .row-action:hover {
   background-color: #ffc400;
 }
+
+.chat-bot {
+  background: rgb(245, 248, 251);
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 15%) 0px 12px 24px 0px;
+  font-family: monospace;
+  overflow: hidden;
+  position: fixed;
+  bottom: 92px;
+  top: initial;
+  right: 32px;
+  left: initial;
+  width: 350px;
+  height: 520px;
+  z-index: 999;
+  transform: scale(0);
+  transform-origin: right bottom;
+  transition: transform 0.3s ease 0s;
+  cursor: pointer;
+}
+.toggle-fn {
+  transform: scale(1);
+  transform-origin: right bottom;
+  transition: transform 0.3s ease 0s;
+}
+.chat-close-btn {
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  z-index: 9999;
+  font-size: larger;
+  font-weight: bolder;
+  color: white;
+}
+.chat-bot-logo,
+.chat-bot-logo2 {
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgb(110, 72, 170);
+  bottom: 92px;
+  border-radius: 100%;
+  box-shadow: rgb(0 0 0 / 15%) 0px 12px 24px 0px;
+  display: flex;
+  fill: rgb(255, 255, 255);
+  height: 56px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: fixed;
+  right: 32px;
+  transform: scale(1);
+  transition: transform 0.3s ease 0s;
+  width: 56px;
+  z-index: 999;
+}
+.chat-bot-logo2 {
+  bottom: 32px;
+}
+
+.hover-text {
+  z-index: 9 !important;
+  color: aliceblue;
+  font-weight: bold;
+}

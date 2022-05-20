@@ -10,7 +10,7 @@ function VenueDetails({ userEventCategory, marqueeDetails }) {
         {marqueeDetails?.map((val, index) => {
           return (
             <li className="list-group-item d-flex justify-content-between align-items-center">
-              {val.name}
+              {val.name} {val.address}
               <span
                 className="badge badge-primary badge-pill venue-detail-list-item"
                 onClick={() => {

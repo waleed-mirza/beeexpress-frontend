@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { useEffect, useState } from "react";
+import ChatBot from "react-simple-chatbot";
 
 // Importing Components
 import Nav from "./customer components/Nav";
@@ -33,11 +34,18 @@ import EventOrder from "./customer components/EventOrder";
 import CustomerProtectedRoute from "./customer components/protectedRoutes/CustomerProtectedRoute";
 import ManagerProtectedRoute from "./customer components/protectedRoutes/ManagerProtectedRoute";
 import AdminProtectedRoute from "./customer components/protectedRoutes/AdminProtectedRoute";
+import DeliveryBoyProtectedRoute from "./customer components/protectedRoutes/DeliveryBoyProtectedRoute";
 
 import { ToastContainer } from "react-toastify";
 import ManagerOrders from "./customer components/ManagerOrders";
 import AdminDashboard from "./customer components/AdminDashboard";
 import { useHistory } from "react-router-dom";
+import SimpleChatBot from "./customer components/SimpleChatBot";
+import FoodOrderDetails from "./customer components/DeliveryBoy/FoodOrderDetails";
+import Order from "./customer components/CustomerOrders.js/Order";
+import FloatButton from "./customer components/UI'S/FloatButton";
+import CustomerOrderItem from "./customer components/CustomerOrders.js/CustomerOrderItem";
+import { REQ_URL } from "./CONSTANTS";
 
 function App() {
   const history = useHistory();
@@ -68,6 +76,36 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (
+        userInformation.userRole === "customer" ||
+        userInformation.userRole === "deliveryboy"
+      )
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            axios({
+              method: "POST",
+              url: `${REQ_URL}location/insert`,
+              data: {
+                userid: localStorage.getItem("beeid"),
+                lat: position.coords.latitude,
+                long: position.coords.longitude,
+              },
+            }).then((response) => {
+              console.log(response.data.result);
+            });
+          });
+        } else {
+          console.log("Not Available");
+        }
+    }, 300000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  setTimeout(() => {}, 1000);
+
   return (
     <>
       <Router>
@@ -80,6 +118,9 @@ function App() {
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/option" component={Option} />
+            <Route path="/customerfoodorder/:id">
+              <CustomerOrderItem loggedIn={userInformation.loggedIn} />
+            </Route>
 
             {/* customer protected */}
 
@@ -89,8 +130,15 @@ function App() {
               path="/event-order/:id"
             />
             <CustomerProtectedRoute
+              exact
               path="/marquee/:id"
               component={Marquee}
+              userInformation={userInformation}
+            />
+
+            <CustomerProtectedRoute
+              path="/allcustomerorders"
+              component={Order}
               userInformation={userInformation}
             />
 
@@ -110,6 +158,13 @@ function App() {
               adminCheck={adminCheck}
             />
             {/* admin protected */}
+            {/* Delivery Boy protected */}
+            <DeliveryBoyProtectedRoute
+              path="/delivery-orders"
+              component={FoodOrderDetails}
+              userInformation={userInformation}
+            />
+            {/* Delivery Boy protected */}
             {/* Food Order Components */}
             <Route path="/food-order">
               <FoodOrderPage
@@ -189,6 +244,9 @@ function App() {
       <div className="custom-footer">
         <p>© 2021 BeeExpress All Rights Reserved</p>
       </div>
+      <SimpleChatBot />
+      <FloatButton />
+
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

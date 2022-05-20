@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ManagerDetails from "./ManagerDetails";
 import OrderDetails from "./UI'S/OrderDetails";
 
 function AdminDashboard() {
@@ -6,6 +7,13 @@ function AdminDashboard() {
   return (
     <div>
       <OrderDetails
+        userid=""
+        filter=""
+        renderCheck={renderCheck}
+        userRole="admin"
+      />
+
+      <ManagerDetails
         userid=""
         filter=""
         renderCheck={renderCheck}

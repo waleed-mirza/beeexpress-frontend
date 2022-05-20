@@ -236,6 +236,7 @@ const Menu = (props) => {
                     }
                   }
                   if (check === 0) {
+                    console.log(categories, "categories here");
                     let temp = categories;
                     temp.count = 1;
                     setCartItemsAddition([...cartItemsAddition, temp]);

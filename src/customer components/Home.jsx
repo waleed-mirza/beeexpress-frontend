@@ -17,6 +17,7 @@ import bookCardImage from "../images/Book Hall.svg";
 // Importing Other Packages
 import { Link } from "react-router-dom";
 import axios from "axios";
+import SimpleChatBot from "./SimpleChatBot";
 
 const Home = ({ adminCheck }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -127,6 +128,8 @@ const Home = ({ adminCheck }) => {
     window.location.href = "/newlogin";
   } else if (adminCheck === true) {
     window.location.href = "/admin-view";
+  } else if (userrole === "deliveryboy") {
+    window.location.href = "/delivery-orders";
   } else {
     return <div>Application is in processing</div>;
   }

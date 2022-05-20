@@ -37,7 +37,7 @@ const Marquee = () => {
         userid: localStorage.getItem("beeid"),
       },
     }).then((response) => {
-      setProfileData(response.data.result);
+      setProfileData(response.data.result[0]);
     });
     axios({
       mehtod: "GET",
@@ -71,7 +71,7 @@ const Marquee = () => {
   };
   return (
     <>
-      <LoggedInNav hideCart={{ display: "none" }} />
+      {/* <LoggedInNav hideCart={{ display: "none" }} /> */}
       <div className="marquee-section">
         <div className="marquee-title">
           <Link to="/option">

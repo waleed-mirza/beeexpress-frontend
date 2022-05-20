@@ -33,6 +33,7 @@ const CartItems = ({ cartItemsAddition, length, setCartItemsAddition }) => {
       }
     }
     setCost(var1);
+    console.log(cartItemsAddition, "cart item");
   }, [cartItemsAddition, flagCheck]);
   if (length > 0) {
     return (

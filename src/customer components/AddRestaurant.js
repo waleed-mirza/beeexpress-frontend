@@ -19,7 +19,8 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
               managerid: res.data.id,
             })
             .then((res) => {
-              setRestaurantName(res.data.result);
+              if (res.data.status === "ok")
+                setRestaurantName(res.data.result[0]);
             });
         }
       });
@@ -27,22 +28,24 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
 
   const [res, setRes] = useState({
     restaurant: "",
+    address: "",
   });
   const [userId, setUserId] = useState(0);
   const [restaurantName, setRestaurantName] = useState("");
 
   const setResaurant = (e) => {
-    // setMenu({ ...menu, category: e.target.value });
-    setRes({ restaurant: e.target.value });
+    const { name, value } = e.target;
+    setRes({ ...res, [name]: value });
   };
   const restaurantsubmit = (e) => {
     e.preventDefault();
 
-    if (res.restaurant === "") {
-      Toast("Enter Restaurant Name", "error");
+    if (res.restaurant === "" || res.address === "") {
+      Toast("error", "Some Fields are empty");
     } else {
       const displayRestaurant = {
         restaurant: res.restaurant,
+        address: res.address,
         managerid: userId,
       };
       axios
@@ -54,7 +57,7 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
         });
     }
   };
-  if (!restaurantName) {
+  if (!restaurantName?.restaurant) {
     return (
       <>
         <div className="Restaurant-section mr-5">
@@ -63,11 +66,26 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
             <div className="col-1">
               <div className="row-1">
                 <div className="form-group">
-                  <label htmlFor="">Restaurant:</label>
+                  <label htmlFor="">Restaurant Name:</label>
                   <input
                     id="restaurant"
+                    name="restaurant"
                     type="text"
-                    VALUE={res.restaurant}
+                    className="py-1 px-2"
+                    value={res.restaurant}
+                    onChange={setResaurant}
+                  />
+                </div>
+              </div>
+              <div className="row-1">
+                <div className="form-group">
+                  <label htmlFor="">Address:</label>
+                  <input
+                    id="address"
+                    name="address"
+                    className="py-1 px-2"
+                    type="text"
+                    value={res.address}
                     onChange={setResaurant}
                   />
                 </div>
@@ -91,9 +109,16 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
     );
   }
   return (
-    <div className="text-uppercase font-weight-bold display-3">
-      {restaurantName}
-    </div>
+    <>
+      <div className="d-flex flex-column">
+        <div className="text-uppercase font-weight-bold display-3">
+          {restaurantName?.restaurant}
+        </div>
+        <div className="text-uppercase font-weight-bold display-5">
+          {restaurantName?.address}
+        </div>
+      </div>
+    </>
   );
 };
 

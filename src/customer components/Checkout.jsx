@@ -11,6 +11,8 @@ import backArrow from "../images/Back Arrow.svg";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "./validationError/Checks";
+import axios from "axios";
+import { REQ_URL } from "../CONSTANTS";
 
 const Checkout = ({ cartItemsAddition, setCartItemsAddition }) => {
   const [inputValues, setInputValues] = useState({
@@ -41,9 +43,35 @@ const Checkout = ({ cartItemsAddition, setCartItemsAddition }) => {
       Toast("Please enter no of people", "error");
     } else {
       Toast("Your order is in pending", "success");
-      const myTimeout = setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+      let foodOrders = [];
+      let managerid;
+      let noofpeople1;
+      if (inputValues.orderoption !== "dine-in") {
+        setInputValues({ ...inputValues, noofpeople: "" });
+        noofpeople1 = "";
+      } else {
+        noofpeople1 = inputValues.noofpeople;
+      }
+      for (let i = 0; i < cartItemsAddition.length; i++) {
+        for (let j = 0; j < cartItemsAddition[i].count; j++)
+          foodOrders.push(cartItemsAddition[i]._id);
+        managerid = cartItemsAddition[i].managerid;
+      }
+      axios({
+        method: "POST",
+        url: `${REQ_URL}foodorder/create`,
+        data: {
+          customerid: localStorage.getItem("beeid"),
+          itemsorders: foodOrders,
+          managerid: managerid,
+          paymentmethod: inputValues.payment,
+          isacceptedfordinein:
+            inputValues.orderoption === "dine-in" ? "approve" : "",
+          noofpersons: noofpeople1,
+        },
+      }).then((response) => {
+        console.log(response.data);
+      });
     }
   };
   // var slider = document.getElementById("myRange");

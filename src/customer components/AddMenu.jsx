@@ -7,6 +7,7 @@ import AddRestaurant from "./AddRestaurant";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "./validationError/Checks";
 import { Link } from "react-router-dom";
+import { REQ_URL } from "../CONSTANTS";
 
 const AddMenu = ({ loggedIn, userrole, userId }) => {
   const [menu, setMenu] = useState({
@@ -17,8 +18,23 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
   });
 
   const [checkflag, setCheckflag] = useState(false);
-
+  const [approved, setApproved] = useState(false);
   useEffect(() => {
+    axios({
+      method: "POST",
+      url: `${REQ_URL}auth/getprofile`,
+      data: {
+        userId: localStorage.getItem("beeid"),
+      },
+    }).then((response) => {
+      console.log(response.data.result[0].status, "approved status");
+      if (response.data.result[0].status === "approve") {
+        setApproved(true);
+      } else {
+        setApproved(false);
+      }
+    });
+
     axios
       .get("http://localhost:5000/category/")
       .then((response) => {
@@ -82,11 +98,11 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
       Toast("Some Menu item fields are empty", "error");
     }
   };
-  if (userrole === "manager") {
+  if (userrole === "manager" && approved === true) {
     return (
       <>
         {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
-        <div className="w-100 row justify-content-around">
+        <div className="w-100 row justify-content-around my-5">
           <AddRestaurant setCheckflag={setCheckflag} checkflag={checkflag} />
           <AddCategory setCheckflag={setCheckflag} checkflag={checkflag} />
         </div>
@@ -117,7 +133,7 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
                       // className="form-control"
                     >
                       <option>Select below</option>
-                      {menu.categories.map(function (singlecateg) {
+                      {menu.categories.map(function(singlecateg) {
                         return (
                           <option key={singlecateg} value={singlecateg}>
                             {singlecateg}
@@ -177,6 +193,17 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
     );
   } else if (userrole === "customer") {
     window.location.href = "/newlogin";
+  } else if (approved === false) {
+    return (
+      <>
+        {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
+        <div className="d-flex justify-content-center align-items-center mt-5">
+          <button className="btn btn-danger">
+            Profile has not been approved yet
+          </button>
+        </div>
+      </>
+    );
   }
   return (
     <div className="d-flex justify-content-center align-items-center mt-5">
