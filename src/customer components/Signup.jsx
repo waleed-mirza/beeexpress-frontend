@@ -8,8 +8,10 @@ import axios from "axios";
 import logo from "../images/Logo.svg";
 import { CheckEmail, Toast } from "./validationError/Checks";
 import { ToastContainer } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const Signup = () => {
+  const history = useHistory();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -54,14 +56,16 @@ const Signup = () => {
 
           const { status, message } = res.data;
           if (status === "ok") {
-            Toast(message, "success");
-            window.location = "/newlogin";
+            Toast("success", message);
+            setTimeout(function() {
+              history.push(`/newlogin`);
+            }, 2000);
           } else {
-            Toast(message, "error");
+            Toast("error", message);
           }
         });
     } else {
-      Toast("Email is not correct", "error");
+      Toast("error", "Email is not correct");
     }
   };
 
@@ -71,7 +75,7 @@ const Signup = () => {
         <nav className="login-signup-nav">
           <div className="logo">
             <img src={logo} alt="" width="200px" />
-            <h1>For Customers</h1>
+            <h1>For Users</h1>
           </div>
           <div className="buttons">
             <Link to="/newlogin">

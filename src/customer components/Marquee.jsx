@@ -63,7 +63,10 @@ const Marquee = () => {
       },
     })
       .then((response) => {
-        history.push(`/event-order/${response.data.result._id}`);
+        Toast("success", "Order Placed");
+        setTimeout(function() {
+          history.push(`/event-order/${response.data.result._id}`);
+        }, 3000);
       })
       .catch((err) => {
         Toast("error", "Server is not responding");
@@ -72,13 +75,19 @@ const Marquee = () => {
   return (
     <>
       {/* <LoggedInNav hideCart={{ display: "none" }} /> */}
+      <img
+        src="/static/media/Hive Backdrop.0dc89738.svg"
+        className="background-delta"
+      ></img>
       <div className="marquee-section">
         <div className="marquee-title">
           <Link to="/option">
             <img src={backArrow} alt="" width="35px" />
           </Link>
-          <h1>{marqueeDetails?.name?.toUpperCase()}</h1>
-          <p>Starting from 20,000 PKR</p>
+          <h1 className="my-2 color-background-text">
+            {marqueeDetails?.name?.toUpperCase()}
+          </h1>
+          {/* <p>Starting from 20,000 PKR</p> */}
         </div>
         <div className="marquee-details">
           <div className="location">
@@ -95,7 +104,7 @@ const Marquee = () => {
           </div>
         </div>
         <div className="marquee-services">
-          <h1>Services available</h1>
+          <h1 className="color-background-text">Services available</h1>
           <div className="marquee-services-cards">
             {marqueeDetails?.services?.map((val, index) => {
               return (
@@ -111,8 +120,8 @@ const Marquee = () => {
           </div>
         </div>
         <div className="marquee-gallery">
-          <h1>Venue Gallery</h1>
-          <div className="marquee-images container">
+          <h1 className="color-background-text">Venue Gallery</h1>
+          <div className="marquee-images container w-75 mx-auto">
             {marqueeDetails?.images?.map((val, index) => {
               return (
                 <div width="350px" className="position-relative">

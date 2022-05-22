@@ -51,7 +51,7 @@ function ManagerDetails({ userid, filter, userRole, renderCheck, managerid }) {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Select Filter</label>
             <select
-              className="form-control"
+              className="form-control input-border"
               id="exampleFormControlSelect1"
               name="filter"
               value={filterValue}
@@ -68,7 +68,9 @@ function ManagerDetails({ userid, filter, userRole, renderCheck, managerid }) {
         </form>
       </div>
 
-      <h3 className="text-center my-3 font-weight-bold">Manager Details</h3>
+      <h3 className="text-center my-5 font-weight-bold color-background-text">
+        Manager Details
+      </h3>
       {!profileData?.length && (
         <div className="my-4 font-weight-bold text-center">No Manager Yet</div>
       )}

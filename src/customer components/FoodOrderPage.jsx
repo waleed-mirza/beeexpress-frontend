@@ -9,6 +9,11 @@ import Cart from "./Cart";
 
 // Importing Images
 import kfcBg from "../images/KFC BG.svg";
+import one from "../foodimages/1.jpg";
+import two from "../foodimages/2.jpg";
+import three from "../foodimages/3.jpg";
+import four from "../foodimages/4.jpg";
+import five from "../foodimages/5.jpg";
 import backArrow from "../images/Back Arrow.svg";
 import hiveBackdrop from "../images/Hive Backdrop.svg";
 
@@ -75,11 +80,30 @@ const FoodOrderPage = ({ cartItemsAddition, setCartItemsAddition }) => {
         result[index].name = result[index].restaurant.toUpperCase();
         result[index].distance = staticrestaurants[index].distance;
         result[index].time = staticrestaurants[index].time;
+        result[index].img = getRandomIndex();
       }
       console.log(result);
       setRestaurants(result);
     });
   }, []);
+  const getRandomIndex = () => {
+    let random = Math.floor(Math.random() * 5);
+    if (random === 0) {
+      return one;
+    }
+    if (random === 1) {
+      return two;
+    }
+    if (random === 2) {
+      return three;
+    }
+    if (random === 3) {
+      return four;
+    }
+    if (random === 4) {
+      return five;
+    }
+  };
 
   return (
     <>
@@ -112,22 +136,22 @@ const FoodOrderPage = ({ cartItemsAddition, setCartItemsAddition }) => {
         <div className="search-results">
           <div className="grid">
             {/* Cards Start */}
-            {restaurants.map((restaurant) => (
-              <div className="card">
+            {restaurants.map((restaurant, index) => (
+              <div className="card scale-bigger">
                 <div className="card-image">
-                  <img src={kfcBg} alt="" width="100%" />
+                  <img src={restaurant.img} alt="" width="100%" />
                   <h1>{restaurant.name}</h1>
                 </div>
                 <div className="card-info">
                   <div className="card-left">
                     <div className="card-info-dist">
                       <i className="fa fa-road"></i>
-                      <p>{restaurant.distance} Km</p>
+                      <p>Food Details</p>
                     </div>
-                    <div className="card-info-time">
+                    {/* <div className="card-info-time">
                       <i className="fa fa-clock-o"></i>
                       <p>{restaurant.time} mins*</p>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="forward-arrow">
                     <Link to={`/menu/${restaurant.managerid}`}>

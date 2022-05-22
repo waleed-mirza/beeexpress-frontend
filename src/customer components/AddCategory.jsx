@@ -19,7 +19,7 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
       .then((res) => {
         if (res.data.loggedIn === true) setUserId(res.data.id);
       });
-  }, [inputcheck]);
+  }, [inputcheck, checkflag]);
   const setCategory = (e) => {
     // setMenu({ ...menu, category: e.target.value });
     setCat({ category: e.target.value });
@@ -42,14 +42,18 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
           });
           setCheckflag(!checkflag);
           setInputcheck(!inputcheck);
+          Toast("success", "Category Added");
+        })
+        .catch((response) => {
+          Toast("error", "Server Error/Duplication value");
         });
     } else {
-      Toast("Enter the category", "error");
+      Toast("error", "Enter the Category");
     }
   };
   return (
     <>
-      <div className="category-section">
+      <div className="category-section my-5 d-flex justify-content-center flex-column">
         <h1>Add category</h1>
         <form onSubmit={categorySubmit}>
           <div className="col-1">
@@ -57,14 +61,15 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
               <div className="form-group">
                 <label htmlFor="">Categories:</label>
                 <input
+                  className="py-2 px-3 input-border"
                   id="category"
                   type="text"
-                  VALUE={cat.category}
+                  value={cat.category}
                   onChange={setCategory}
                 />
               </div>
             </div>
-            <input type="submit" VALUE="Submit" className="btn btn-primary" />
+            <input type="submit" VALUE="Submit" className="btn btn-warning" />
           </div>
         </form>
       </div>

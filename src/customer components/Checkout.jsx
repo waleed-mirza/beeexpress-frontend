@@ -13,8 +13,10 @@ import { ToastContainer } from "react-toastify";
 import { Toast } from "./validationError/Checks";
 import axios from "axios";
 import { REQ_URL } from "../CONSTANTS";
+import { useHistory } from "react-router-dom";
 
 const Checkout = ({ cartItemsAddition, setCartItemsAddition }) => {
+  const history = useHistory();
   const [inputValues, setInputValues] = useState({
     payment: "",
     orderoption: "",
@@ -71,6 +73,10 @@ const Checkout = ({ cartItemsAddition, setCartItemsAddition }) => {
         },
       }).then((response) => {
         console.log(response.data);
+        Toast("success", "Order Placed, Waiting for Approval");
+        setTimeout(function() {
+          history.push("/");
+        }, 3000);
       });
     }
   };
@@ -90,7 +96,7 @@ const Checkout = ({ cartItemsAddition, setCartItemsAddition }) => {
       </Link>
       <div className="checkout-section">
         <div className="checkout-section-left">
-          <h1>Checkout</h1>
+          <h1 className="color-background-text">Checkout</h1>
           <form onSubmit={handleSubmit}>
             <p>Select a payment method</p>
             <div className="radio-item">
@@ -200,7 +206,7 @@ const Checkout = ({ cartItemsAddition, setCartItemsAddition }) => {
           </form>
         </div>
         <div className="checkout-section-right">
-          <h1>Order Summary</h1>
+          <h1 className="color-background-text">Order Summary</h1>
           <CartItems
             cartItemsAddition={cartItemsAddition}
             setCartItemsAddition={setCartItemsAddition}

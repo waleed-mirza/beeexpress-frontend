@@ -57,8 +57,8 @@ function UpdateMarquee({ userEventCategory, id }) {
       Toast("error", "Some Fields are empty");
       return;
     }
-    let servicesToPush = marqueeDetails.services;
-    servicesToPush.push(inputValues.service);
+    let servicesToPush = marqueeDetails?.services;
+    servicesToPush?.push(inputValues.service);
     axios({
       method: "POST",
       url: "http://localhost:5000/marquee/updateservices",
@@ -108,7 +108,7 @@ function UpdateMarquee({ userEventCategory, id }) {
     formData.append("file", inputValues.image);
     formData.append("marqueeid", id);
     formData.append("managerid", localStorage.getItem("beeid"));
-    formData.append("images", JSON.stringify(marqueeDetails.images));
+    formData.append("images", JSON.stringify(marqueeDetails?.images));
     axios({
       method: "POST",
       url: "http://localhost:5000/marquee/updateimages",
@@ -155,7 +155,7 @@ function UpdateMarquee({ userEventCategory, id }) {
   };
   return (
     <div className="container mt-5">
-      <h3 className="text-center font-weight-bolder">
+      <h3 className="text-center font-weight-bolder color-background-text">
         {userEventCategory.toUpperCase()} Details
       </h3>
       {marqueeDetails && (
@@ -178,7 +178,7 @@ function UpdateMarquee({ userEventCategory, id }) {
             type="text"
             placeholder="Enter the Name"
             name="name"
-            className="px-3 py-2"
+            className="px-3 py-2 input-border"
             value={inputValues.name}
             onChange={handleChangeInputValues}
           />
@@ -189,7 +189,7 @@ function UpdateMarquee({ userEventCategory, id }) {
             type="text"
             placeholder="Enter the address"
             name="address"
-            className="px-3 py-2"
+            className="px-3 py-2 input-border"
             value={inputValues.address}
             onChange={handleChangeInputValues}
           />
@@ -200,7 +200,7 @@ function UpdateMarquee({ userEventCategory, id }) {
           </button>
         </div>
         <div className="d-flex justify-content-center align-items-center flex-column">
-          <div className="h3 fw-bold my-4">Services</div>
+          <div className="h3 fw-bold my-4 color-background-text">Services</div>
           <div className="d-flex flex-wrap my-4 ">
             {marqueeDetails?.services?.map((val, index) => {
               return (
@@ -256,7 +256,7 @@ function UpdateMarquee({ userEventCategory, id }) {
           </div>
           <div className="d-flex flex-wrap my-4">
             <div className="marquee-gallery">
-              <h1>Venue Gallery</h1>
+              <h1 className="color-background-text">Venue Gallery</h1>
               <div className="marquee-images">
                 {marqueeDetails?.images?.map((val, index) => {
                   return (
@@ -283,7 +283,7 @@ function UpdateMarquee({ userEventCategory, id }) {
           </div>
         </div>
       </div>
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -293,7 +293,7 @@ function UpdateMarquee({ userEventCategory, id }) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
     </div>
   );
 }

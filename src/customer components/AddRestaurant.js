@@ -52,7 +52,7 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
         .post("http://localhost:5000/restaurant/add", displayRestaurant)
         .then((res) => {
           console.log(res.data);
-          Toast("Name Registered", "success");
+          Toast("success", "Name registered");
           setCheckflag(!checkflag);
         });
     }

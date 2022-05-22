@@ -36,12 +36,14 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
     });
 
     axios
-      .get("http://localhost:5000/category/")
+      .post("http://localhost:5000/category/searchbyid", {
+        managerid: localStorage.getItem("beeid"),
+      })
       .then((response) => {
-        if (response.data.length > 0) {
+        if (response.data.result.length > 0) {
           setMenu({
             ...menu,
-            categories: response.data.map((categ) => categ.category),
+            categories: response.data.result.map((categ) => categ.category),
             // category: response.data[0].category,
           });
         }
@@ -54,8 +56,9 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
 
   const setCategory = (e) => {
     // setMenu({ ...menu, category: e.target.value });
-    setMenu({ ...menu, category: e.target.value });
-    console.log(e.target.value);
+    const { name, value } = e.target;
+    setMenu({ ...menu, [name]: value });
+    console.log(menu);
   };
   const setMenuItem = (e) => {
     setMenu({ ...menu, menuitem: e.target.value });
@@ -88,36 +91,37 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
             price: null,
             categories: [],
           });
-          Toast("Menu item is added", "success");
+          Toast("success", "Menu item is added");
 
           setCheckflag(!checkflag);
           console.log(menu);
         })
         .catch((err) => console.log(err));
     } else {
-      Toast("Some Menu item fields are empty", "error");
+      Toast("error", "Some Menu item fields are empty");
     }
   };
   if (userrole === "manager" && approved === true) {
     return (
       <>
         {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
-        <div className="w-100 row justify-content-around my-5">
+
+        <div className="w-100 row justify-content-center align-items-center my-5 flex-column ">
           <AddRestaurant setCheckflag={setCheckflag} checkflag={checkflag} />
-          <AddCategory setCheckflag={setCheckflag} checkflag={checkflag} />
         </div>
-        <div className="w-100 row justify-content-around">
-          <div className="d-flex flex-column justify-content-around">
-            <Link to="/add-marquee">
-              <button className="btn btn-primary">Add Marquee</button>
-            </Link>
-            <Link to="/add-hall">
-              <button className="btn btn-primary">Add Hall</button>
-            </Link>
-            <Link to="/manage-orders">
-              <button className="btn btn-primary">View Orders</button>
-            </Link>
-          </div>
+        <div className="d-flex justify-content-around align-items-center my-5">
+          <Link to="/add-marquee">
+            <button className="btn btn-warning">Add Marquee</button>
+          </Link>
+          <Link to="/add-hall">
+            <button className="btn btn-warning">Add Hall</button>
+          </Link>
+          <Link to="/manage-orders">
+            <button className="btn btn-warning">View Orders</button>
+          </Link>
+        </div>
+        <div className="d-flex justify-content-around align-items-center w-75 mx-auto">
+          <AddCategory setCheckflag={setCheckflag} checkflag={checkflag} />
 
           <div className="add-menu-section row justify-centent-center flex-column">
             <h1>Add Menu</h1>
@@ -130,9 +134,10 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
                     <select
                       value={menu.category}
                       onChange={setCategory}
-                      // className="form-control"
+                      name="category"
+                      className="py-1 px-2 input-border"
                     >
-                      <option>Select below</option>
+                      <option selected>Select below</option>
                       {menu.categories.map(function(singlecateg) {
                         return (
                           <option key={singlecateg} value={singlecateg}>
@@ -142,18 +147,13 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
                       })}
                     </select>
                   </div>
-                  {/* <input
-            id="category"
-            type="text"
-            value={menu.category}
-            onChange={setCategory}
-          /> */}
                   <div className="form-group">
                     <label htmlFor="">Item:</label>
                     <input
                       type="text"
                       value={menu.menuitem}
                       onChange={setMenuItem}
+                      className="input-border py-2 px-3"
                     />
                   </div>
                   <div className="form-group">
@@ -162,22 +162,20 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
                       type="number"
                       value={menu.price}
                       onChange={setPrice}
+                      className="input-border py-2 px-3"
                     />
                   </div>
                   <input
                     type="submit"
                     value="Submit"
-                    className="btn btn-primary"
+                    className="btn btn-warning"
                   />
                 </form>
               </div>
             </div>
-            <p>{menu.category}</p>
-            <p>{menu.menuitem}</p>
-            <p>{menu.price}</p>
-            {/* <p>{JSON.stringify(menu)}</p> */}
           </div>
         </div>
+        <div></div>
         <ToastContainer
           position="bottom-center"
           autoClose={5000}

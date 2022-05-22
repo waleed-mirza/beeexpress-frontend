@@ -1,3 +1,4 @@
+import { Rating } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -8,10 +9,14 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
   const [orderDetails, setOrderDetails] = useState([]);
   const [filterValue, setFilterValue] = useState(filter);
   const [deleteRenderCheck, setDeleteRenderCheck] = useState(false);
+  const [rating, setRating] = useState(0);
+
   const [marqueeDetails, setMarqueeDetails] = useState([]);
   const isManager = userRole === "manager" ? true : false;
   const isAdmin = userRole === "admin" ? true : false;
   const isCustomer = userRole === "customer" ? true : false;
+
+  const [reviewCheck, setReviewCheck] = useState(false);
   const history = useHistory();
   useEffect(() => {
     axios({
@@ -33,7 +38,7 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
       console.log(response.data.result);
       setOrderDetails(response.data.result);
     });
-  }, [renderCheck, deleteRenderCheck]);
+  }, [renderCheck, deleteRenderCheck, reviewCheck]);
   const onDeleteOrder = (id) => {
     axios({
       method: "POST",
@@ -67,10 +72,48 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
     setFilterValue(e.target.value);
     setDeleteRenderCheck(!deleteRenderCheck);
   };
+  const markComleted = (orderid, isCompleted) => {
+    axios({
+      method: "POST",
+      url: `${REQ_URL}eventorder/updatefilters`,
+      data: {
+        _id: orderid,
+        isCompleted: isCompleted,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        setDeleteRenderCheck(!deleteRenderCheck);
+        Toast("success", "Order Completed");
+      })
+      .catch((err) => {
+        setDeleteRenderCheck(!deleteRenderCheck);
+      });
+  };
+  const giveReview = (id, value) => {
+    axios({
+      method: "POST",
+      url: `${REQ_URL}eventorder/updatefilters`,
+      data: {
+        _id: id,
+        review: value,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        setDeleteRenderCheck(!deleteRenderCheck);
+        setReviewCheck(!reviewCheck);
+        Toast("success", "Sent Review");
+      })
+      .catch((err) => {
+        setDeleteRenderCheck(!deleteRenderCheck);
+        setReviewCheck(!reviewCheck);
+      });
+  };
   return (
     <div className="my-5 container table-responsive">
       <div className="w-75 mx-auto">
-        <h3 className="text-center my-3 font-weight-bold">
+        <h3 className="text-center my-3 font-weight-bold color-background-text">
           Event Order Details
         </h3>
 
@@ -78,7 +121,7 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Select Filter</label>
             <select
-              className="form-control"
+              className="form-control input-border"
               id="exampleFormControlSelect1"
               name="filter"
               value={filterValue}
@@ -109,8 +152,10 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
             <th scope="col">Date</th>
             <th scope="col">Location</th>
             <th scope="col">Status</th>
-            {(isCustomer || isAdmin) && <th scope="col">(Update)</th>}
+            {(isCustomer || isAdmin) && <th scope="col">(Status)</th>}
             {(isAdmin || isCustomer) && <th scope="col">(Delete)</th>}
+            <th scope="col">Completed</th>
+            <th scope="col">Review</th>
             {(isManager || isAdmin) && <th scope="col">Action</th>}
           </tr>
         </thead>
@@ -148,6 +193,41 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
                     }}
                   >
                     Delete
+                  </td>
+                )}
+
+                {isCustomer && val.isCompleted === "no" ? (
+                  <td
+                    className="text-center row-action"
+                    onClick={() => markComleted(val._id, "yes")}
+                  >
+                    Mark Complete
+                  </td>
+                ) : (
+                  <td>{val.isCompleted}</td>
+                )}
+                {isCustomer &&
+                val?.review === 0 &&
+                val?.isCompleted === "yes" ? (
+                  <td>
+                    <Rating
+                      name="half-rating"
+                      // value={rating}
+                      precision={0.5}
+                      onChange={(event, newValue) => {
+                        setRating(newValue);
+                        giveReview(val._id, newValue);
+                      }}
+                    />
+                  </td>
+                ) : (
+                  <td>
+                    <Rating
+                      name="half-rating-read"
+                      defaultValue={val.review}
+                      precision={0.5}
+                      readOnly
+                    />
                   </td>
                 )}
 

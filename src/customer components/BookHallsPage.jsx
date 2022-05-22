@@ -91,6 +91,10 @@ const BookHallsPage = ({ place }) => {
   return (
     <>
       <LoggedInNav hideCart={{ display: "none" }} />
+      <img
+        src="/static/media/Hive Backdrop.0dc89738.svg"
+        className="background-delta"
+      ></img>
       <div className="book-halls">
         <div className="book-halls-title title">
           <h1>Book {place}</h1>
@@ -112,23 +116,16 @@ const BookHallsPage = ({ place }) => {
           <div className="grid">
             {/* Cards Start */}
             {marqueeDetails?.map((marquee, index) => (
-              <div className="card">
-                <div className="card-image">
+              <div className="card scale-bigger">
+                <div className="card-image-top">
                   <img src={marquee.images?.[0]} alt="" width="100%" />
-                  <h1>{marquee.name}</h1>
+                  {/* <h1>{marquee.name}</h1> */}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title text-uppercase">{marquee.name}</h5>
                 </div>
                 <div className="card-info">
-                  <div className="card-left">
-                    <div className="card-info-dist">
-                      <i className="fa fa-users"></i>
-                      <p> {marquee.capacity}</p>
-                    </div>
-                    <div className="card-info-time">
-                      <i className="fa fa-car"></i>
-                      <p> {marquee.parkingSpace}</p>
-                    </div>
-                  </div>
-                  <div className="forward-arrow">
+                  <div className="hall-marquee-page-arrow">
                     <Link to={`/marquee/${marquee._id}`}>
                       <img src={backArrow} alt="" width="30px" />
                     </Link>

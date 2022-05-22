@@ -173,17 +173,21 @@ const Menu = (props) => {
   return (
     <>
       <LoggedInNav showCart={showCart} linkTo="/menu/cart" />
+      <img
+        src="/static/media/Hive Backdrop.0dc89738.svg"
+        className="background-delta"
+      ></img>
       <div className="menu-section">
         <div className="menu-title">
           <Link to="/food-order">
             <img src={backArrow} alt="" width="35px" />
           </Link>
-          <h1>
+          <h1 className="text-uppercase font-weight-bold color-background-text">
             {restaurant.length > 0 ? restaurant[0].restaurant : "Not defined"}
           </h1>
           <p>Select items from the menu</p>
         </div>
-        <div className="menu d-flex flex-wrap">
+        <div className="menu d-flex flex-wrap  w-75 mx-auto">
           {/* {cat.map((newcat) => (
             <div key={newcat._id}>
               <h1>{newcat.category}</h1>
@@ -211,10 +215,54 @@ const Menu = (props) => {
           ))} */}
 
           {menu.map((categories) => (
-            <div className="menu-item m-2 p-2 mx-5" key={categories._id}>
-              <h1>{categories.category}</h1>
+            /* <>
+              <div class="card">
+                <div class="card-header">{categories.category}</div>
+                <div class="card-body">
+                  <h5 class="card-title">{categories.menuitem}</h5>
+                  <p class="card-text">{categories.price}</p>
+                  <i
+                    className="fa fa-plus-square"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      let check = 0;
+                      let tempId = categories._id;
+                      if (cartItemsAddition) {
+                        for (
+                          let index = 0;
+                          index < cartItemsAddition.length;
+                          index++
+                        ) {
+                          if (cartItemsAddition[index]._id === tempId) {
+                            check = 1;
+                            break;
+                          }
+                        }
+                      }
+                      if (check === 0) {
+                        console.log(categories, "categories here");
+                        let temp = categories;
+                        temp.count = 1;
+                        setCartItemsAddition([...cartItemsAddition, temp]);
+                        let temp1 = length + 1;
+                        setLength(temp1);
+                      }
+                    }}
+                  ></i>
+                </div>
+              </div>
+            </> */
+            <div
+              className="menu-item m-2 p-2 mx-5 custom-card scale-bigger"
+              key={categories._id}
+            >
+              <h4 className="color-background-text">
+                {categories.category?.toUpperCase()}
+              </h4>
               <div className="menu-item-desc">
-                <h2>{categories.menuitem}</h2>
+                <h5 className="font-weight-bold">
+                  {categories.menuitem?.toUpperCase()}
+                </h5>
                 <p>{categories.price}</p>
               </div>
               <i

@@ -3,16 +3,20 @@ import "../App.css";
 
 //Importing Images
 import logo from "../images/Logo.svg";
+import { useHistory } from "react-router-dom";
 
 //Importing other packages
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Toast } from "./validationError/Checks";
 
 //Importing Components
 
 const LoggedInNav = ({ showCart, hideCart }) => {
+  const history = useHistory();
   const logoutUser = () => {
     localStorage.setItem("userLogout", "1");
+    Toast("success", "LoggedOut Successfully");
   };
   return (
     <div className="navStyle">
@@ -35,13 +39,21 @@ const LoggedInNav = ({ showCart, hideCart }) => {
           <li>Logout</li>
         </Link>
       </ul>
-      <div className="profile">
-        <h1>Profile-{localStorage.getItem("email")}</h1>
+      <div
+        className="profile"
+        onClick={() => {
+          history.push(`/updateprofile`);
+        }}
+      >
+        <h4>Profile-{localStorage.getItem("email")}</h4>
       </div>
       <div className="nav-buttons">
         <div style={{ textDecoration: "none" }}>
           <button className="cart-btn" style={hideCart}>
-            <i className="fa fa-shopping-cart" onClick={showCart}></i>
+            <i
+              className="fa fa-shopping-cart cart-color"
+              onClick={showCart}
+            ></i>
           </button>
         </div>
       </div>

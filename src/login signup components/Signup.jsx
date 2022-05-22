@@ -17,7 +17,7 @@ export default class SignUp extends Component {
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <div className="pagename">
-                <b>For Customers</b>
+                <b>For Users</b>
               </div>
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">

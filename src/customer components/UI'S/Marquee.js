@@ -40,7 +40,7 @@ function Marquee({ userEventCategory, marqueeid }) {
   };
   return (
     <div className="container mt-5">
-      <h3 className="text-center font-weight-bolder">
+      <h3 className="text-center font-weight-bolder color-background-text">
         {userEventCategory.toUpperCase()} Details
       </h3>
       <div className="w-75 m-auto mt-5 d-flex justify-content-center align-items-center flex-column">
@@ -50,7 +50,7 @@ function Marquee({ userEventCategory, marqueeid }) {
             type="text"
             placeholder="Enter the Name"
             name="name"
-            className="px-3 py-2"
+            className="px-3 py-2 input-border"
             value={inputValues.name}
             onChange={handleChangeInputValues}
           />
@@ -61,7 +61,7 @@ function Marquee({ userEventCategory, marqueeid }) {
             type="text"
             placeholder="Enter the address"
             name="address"
-            className="px-3 py-2"
+            className="px-3 py-2 input-border"
             value={inputValues.address}
             onChange={handleChangeInputValues}
           />

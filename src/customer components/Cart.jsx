@@ -23,7 +23,7 @@ const Cart = ({ cartItemsAddition, length, setCartItemsAddition }) => {
             <i className="fa fa-times" onClick={hideCart}></i>
           </button>
         </div>
-        <h1>Cart</h1>
+        <h1 className="color-background-text">Cart</h1>
         <CartItems
           cartItemsAddition={cartItemsAddition}
           setCartItemsAddition={setCartItemsAddition}

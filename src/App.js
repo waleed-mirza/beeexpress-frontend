@@ -46,6 +46,7 @@ import Order from "./customer components/CustomerOrders.js/Order";
 import FloatButton from "./customer components/UI'S/FloatButton";
 import CustomerOrderItem from "./customer components/CustomerOrders.js/CustomerOrderItem";
 import { REQ_URL } from "./CONSTANTS";
+import UpdateProfile from "./customer components/UpdateProfile";
 
 function App() {
   const history = useHistory();
@@ -93,7 +94,7 @@ function App() {
                 long: position.coords.longitude,
               },
             }).then((response) => {
-              console.log(response.data.result);
+              console.log(response.data.result, "sent location");
             });
           });
         } else {
@@ -103,8 +104,6 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
-
-  setTimeout(() => {}, 1000);
 
   return (
     <>
@@ -118,6 +117,10 @@ function App() {
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/option" component={Option} />
+            <Route path="/updateprofile">
+              <UpdateProfile loggedIn={userInformation.loggedIn} />
+            </Route>
+
             <Route path="/customerfoodorder/:id">
               <CustomerOrderItem loggedIn={userInformation.loggedIn} />
             </Route>

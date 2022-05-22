@@ -6,6 +6,10 @@ function AdminDashboard() {
   const [renderCheck, setRenderCheck] = useState(false);
   return (
     <div>
+      <img
+        src="/static/media/Hive Backdrop.0dc89738.svg"
+        className="background-delta-reverse"
+      ></img>
       <OrderDetails
         userid=""
         filter=""

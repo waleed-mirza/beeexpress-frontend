@@ -7,10 +7,17 @@
   font-family: "Montserrat", sans-serif;
 }
 
-.main-section .hive-backdrop {
+.main-section .hive-backdrop,
+.background-delta {
   position: absolute;
   right: -200px;
   top: 100px;
+  z-index: -100;
+}
+.background-delta-reverse {
+  position: absolute;
+  right: -350px;
+  top: 500px;
   z-index: -100;
 }
 
@@ -137,7 +144,8 @@
   font-weight: 500;
 }
 .forward-arrow {
-  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 5px !important;
 }
 .forward-arrow img {
   transform: rotate(180deg);
@@ -206,7 +214,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 400px;
+  width: 200px;
   padding: 15px 30px;
   box-shadow: 5px 5px 10px rgb(207, 207, 207);
   border-radius: 7px;
@@ -688,5 +696,41 @@
   cursor: pointer;
 }
 .venue-detail-list-item {
+  cursor: pointer;
+}
+.input-border,
+.input-border:focus {
+  border: 3px solid #ffc400;
+}
+
+.color-background-text {
+  background-image: linear-gradient(45deg, #ffc400, #000000);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+.card,
+.custom-card {
+  transition: all 0.2s ease-in-out;
+}
+.card img,
+.card {
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+}
+.scale-bigger:hover {
+  transform: scale(1.1);
+}
+.hall-marquee-page-arrow {
+  margin-left: 200px;
+}
+.hall-marquee-page-arrow img {
+  transform: rotate(180deg);
+}
+.cart-color {
+  color: #ffc400;
+}
+.profile {
   cursor: pointer;
 }

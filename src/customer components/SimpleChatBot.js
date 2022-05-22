@@ -4,6 +4,17 @@ import ChatBot from "react-simple-chatbot";
 function SimpleChatBot() {
   const [toggle, setToggle] = useState(false);
   useEffect(() => {}, [toggle]);
+
+  const handleEnd = ({ steps, values }) => {
+    console.log(values);
+    if (values[1] === 1) {
+      window.location.href = "/food-order";
+    } else if (values[1] === 2) {
+      window.location.href = "/book-halls";
+    } else if (values[1] === 3) {
+      window.location.href = "/book-marquees";
+    }
+  };
   return (
     <div className="chat-bot-container">
       <a className="chat-bot-logo" onClick={() => setToggle(!toggle)}>
@@ -22,6 +33,7 @@ function SimpleChatBot() {
           X
         </div>
         <ChatBot
+          handleEnd={handleEnd}
           steps={[
             {
               id: "1",
@@ -47,13 +59,24 @@ function SimpleChatBot() {
               id: "5",
               options: [
                 { value: 1, label: "Food order", trigger: "6" },
-                { value: 2, label: "Book Hall", trigger: "6" },
-                { value: 3, label: "Book Marquee", trigger: "6" },
+                { value: 2, label: "Book Hall", trigger: "7" },
+                { value: 3, label: "Book Marquee", trigger: "8" },
               ],
-              trigger: "6",
             },
             {
               id: "6",
+              message: ({ previousValue, steps }) =>
+                "You selected {previousValue}",
+              end: true,
+            },
+            {
+              id: "7",
+              message: ({ previousValue, steps }) =>
+                "You selected {previousValue}",
+              end: true,
+            },
+            {
+              id: "8",
               message: ({ previousValue, steps }) =>
                 "You selected {previousValue}",
               end: true,

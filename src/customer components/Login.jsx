@@ -32,7 +32,7 @@ const Login = () => {
 
     console.log(user.email, user.password);
     if (user.email === "" || user.password === "") {
-      Toast("Some Fields are Empty", "error");
+      Toast("error", "Some Fields are Empty");
     } else if (CheckEmail(user.email)) {
       const displayUser = {
         email: user.email,
@@ -45,7 +45,7 @@ const Login = () => {
         .then((res) => {
           if (!res.data.auth) {
             setLoginStatus(false);
-            Toast("Email/Password not correct", "error");
+            Toast("error", res.data.message || "Not Logged In");
           } else {
             localStorage.setItem("token", res.data.token);
             setLoginStatus(true);
@@ -54,12 +54,12 @@ const Login = () => {
             localStorage.setItem("beeid", res.data.result._id);
 
             console.log(res.data.result);
-            Toast("Congrats! Logged In", "success");
+            Toast("success", "Congrats! Logged In");
             window.location = "/";
           }
         });
     } else {
-      Toast("Email is not correct", "error");
+      Toast("error", "Email is not correct");
     }
   };
 
@@ -92,7 +92,7 @@ const Login = () => {
         <nav className="login-signup-nav">
           <div className="logo">
             <img src={logo} alt="" width="200px" />
-            <h1>For Customers</h1>
+            <h1>For Users</h1>
           </div>
           <div className="buttons">
             <Link to="/newsignup">

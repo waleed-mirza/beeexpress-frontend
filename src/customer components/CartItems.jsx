@@ -43,7 +43,7 @@ const CartItems = ({ cartItemsAddition, length, setCartItemsAddition }) => {
             return (
               <div className="cart-card">
                 <div className="cart-card-details">
-                  <h2>{val.menuitem}</h2>
+                  <h4>{val.menuitem?.toUpperCase()}</h4>
                   <p>{val.price}</p>
                 </div>
                 <div className="counter">

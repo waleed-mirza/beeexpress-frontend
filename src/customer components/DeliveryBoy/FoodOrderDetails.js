@@ -3,7 +3,7 @@ import FoodOrder from "../CustomerOrders.js/FoodOrder";
 
 function FoodOrderDetails() {
   return (
-    <div>
+    <div className="container">
       <FoodOrder />
     </div>
   );
