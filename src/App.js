@@ -48,6 +48,8 @@ import CustomerOrderItem from "./customer components/CustomerOrders.js/CustomerO
 import { REQ_URL } from "./CONSTANTS";
 import UpdateProfile from "./customer components/UpdateProfile";
 
+import BackgroundImage from "./foodimages/backgroundowner.jpg";
+
 function App() {
   const history = useHistory();
   const [adminCheck, setAdminCheck] = useState(false);
@@ -57,6 +59,7 @@ function App() {
     userRole: "",
     loggedIn: false,
   });
+  const [renderLocationCheck, setRenderLocationCheck] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:5000/auth/checklogin", {
@@ -94,19 +97,23 @@ function App() {
                 long: position.coords.longitude,
               },
             }).then((response) => {
+              setRenderLocationCheck(!renderLocationCheck);
               console.log(response.data.result, "sent location");
             });
           });
         } else {
           console.log("Not Available");
         }
-    }, 300000);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [renderLocationCheck]);
 
   return (
     <>
+      <div className="app-background">
+        <img src={BackgroundImage} alt="" />
+      </div>
       <Router>
         <div className="App">
           <Switch>

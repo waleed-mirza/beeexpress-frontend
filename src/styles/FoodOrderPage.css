@@ -734,3 +734,38 @@
 .profile {
   cursor: pointer;
 }
+.manage-buttons {
+  height: 40vh;
+}
+.app-background1 {
+  background-color: #ffc400;
+  height: 100vh !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: -99 !important;
+  opacity: 0.3;
+}
+.outter-box {
+  z-index: 99 !important;
+}
+.app-background1 {
+  background: #ffc400 no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.app-background {
+  position: fixed;
+  height: 100vh;
+  opacity: 0.1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: -1;
+}
+.app-background img {
+  width: 100vw;
+  height: 100vh;
+}

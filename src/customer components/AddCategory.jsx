@@ -53,8 +53,8 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
   };
   return (
     <>
-      <div className="category-section my-5 d-flex justify-content-center flex-column">
-        <h1>Add category</h1>
+      <div className="category-section my-5 d-flex justify-content-start align-items-start flex-column w-50 ml-5">
+        <h1 className="ml-3">Add category</h1>
         <form onSubmit={categorySubmit}>
           <div className="col-1">
             <div className="row-1">

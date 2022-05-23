@@ -85,8 +85,8 @@ function CustomerOrderItem({ loggedIn }) {
   }, [renderCheck]);
   useEffect(() => {
     // const interval = setInterval(() => {
-    //   getCoords();
-    // }, 3000);
+    getCoords();
+    // }, 30000);
     // return () => clearInterval(interval);
   }, []);
 
@@ -102,7 +102,7 @@ function CustomerOrderItem({ loggedIn }) {
     })
       .then((response) => {
         setRenderCheck(!renderCheck);
-        Toast("success","Delivery Accepted")
+        Toast("success", "Delivery Accepted");
       })
       .catch((err) => {
         setRenderCheck(!renderCheck);
@@ -118,7 +118,7 @@ function CustomerOrderItem({ loggedIn }) {
       },
     })
       .then((response) => {
-        Toast("success","Dine-In Accepted")
+        Toast("success", "Dine-In Accepted");
         setRenderCheck(!renderCheck);
       })
       .catch((err) => {
@@ -137,8 +137,7 @@ function CustomerOrderItem({ loggedIn }) {
       .then((response) => {
         console.log(response.data);
         setRenderCheck(!renderCheck);
-        Toast("success","Order Completed")
-
+        Toast("success", "Order Completed");
       })
       .catch((err) => {
         setRenderCheck(!renderCheck);
@@ -156,8 +155,7 @@ function CustomerOrderItem({ loggedIn }) {
       .then((response) => {
         console.log(response.data);
         setRenderCheck(!renderCheck);
-        Toast("success","Sent Review")
-
+        Toast("success", "Sent Review");
       })
       .catch((err) => {
         setRenderCheck(!renderCheck);
@@ -173,7 +171,7 @@ function CustomerOrderItem({ loggedIn }) {
       },
     })
       .then((response) => {
-        Toast("success","Sent Payment")
+        Toast("success", "Sent Payment");
         setRenderCheck(!renderCheck);
       })
       .catch((err) => {
@@ -188,23 +186,25 @@ function CustomerOrderItem({ loggedIn }) {
         userid: userid,
       },
     }).then((response) => {
-      const { lat, long } = response.data.result;
-      var request_url =
-        api_url +
-        "?" +
-        "key=" +
-        api_key +
-        "&q=" +
-        encodeURIComponent(lat + "," + long) +
-        "&pretty=1" +
-        "&no_annotations=1";
-      axios({
-        method: "get",
-        url: request_url,
-      }).then((response) => {
-        setCustomerLocation(response.data.results[0].formatted);
-        console.log(response.data.results[0].formatted, "customer location");
-      });
+      if (response.data.result) {
+        const { lat, long } = response.data.result;
+        var request_url =
+          api_url +
+          "?" +
+          "key=" +
+          api_key +
+          "&q=" +
+          encodeURIComponent(lat + "," + long) +
+          "&pretty=1" +
+          "&no_annotations=1";
+        axios({
+          method: "get",
+          url: request_url,
+        }).then((response) => {
+          setCustomerLocation(response.data.results[0].formatted);
+          console.log(response.data.results[0].formatted, "customer location");
+        });
+      }
     });
   };
   const totalPrice = (itemsorder) => {
@@ -212,7 +212,10 @@ function CustomerOrderItem({ loggedIn }) {
     itemsorder?.forEach((element) => {
       total += allItems?.find((x) => x._id === element)?.price;
     });
-    return total + deliveryCharges;
+    console.log(orderDetails.isacceptedfordelivery, "din in");
+    if (orderDetails.isacceptedfordelivery !== "cancel")
+      return total + deliveryCharges;
+    return total;
   };
   function getCoords(customerid, deliveryboyid) {
     // if (orderDetails?.customerid) {
@@ -436,7 +439,9 @@ function CustomerOrderItem({ loggedIn }) {
                     </div>
                   );
                 })}
-                <div>Delivery Charges:50/Rs</div>
+                {orderDetails.isacceptedfordelivery !== "cancel" && (
+                  <div>Delivery Charges:50/Rs</div>
+                )}
                 <div>Total: {totalPrice(orderDetails.itemsorder)}</div>
               </div>
             </div>

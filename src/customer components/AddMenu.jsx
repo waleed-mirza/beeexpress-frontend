@@ -105,26 +105,32 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
     return (
       <>
         {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
-
-        <div className="w-100 row justify-content-center align-items-center my-5 flex-column ">
-          <AddRestaurant setCheckflag={setCheckflag} checkflag={checkflag} />
+        <div className="d-flex justify-content-around align-items-start manage-buttons my-5 w-75 mx-auto outter-box">
+          <div className="row justify-content-center align-items-center flex-column w-50">
+            <AddRestaurant setCheckflag={setCheckflag} checkflag={checkflag} />
+          </div>
+          {/* <div className="w-50 mh-"> */}
+          <div className="d-flex justify-content-start align-items-center flex-column h-100 w-50 ">
+            <Link to="/add-marquee">
+              <button className="btn btn-warning">Add Marquee</button>
+            </Link>
+            <Link to="/add-hall">
+              <button className="btn btn-warning my-4 ">Add Hall</button>
+            </Link>
+            <Link to="/manage-orders">
+              <button className="btn btn-warning">View Orders</button>
+            </Link>
+            {/* </div> */}
+          </div>
         </div>
-        <div className="d-flex justify-content-around align-items-center my-5">
-          <Link to="/add-marquee">
-            <button className="btn btn-warning">Add Marquee</button>
-          </Link>
-          <Link to="/add-hall">
-            <button className="btn btn-warning">Add Hall</button>
-          </Link>
-          <Link to="/manage-orders">
-            <button className="btn btn-warning">View Orders</button>
-          </Link>
-        </div>
-        <div className="d-flex justify-content-around align-items-center w-75 mx-auto">
+        <h3 className="my-5 color-background-text text-center font-weight-bold">
+          Restaurant Management
+        </h3>
+        <div className="d-flex justify-content-around align-items-start w-75 mx-auto mt-4">
           <AddCategory setCheckflag={setCheckflag} checkflag={checkflag} />
 
-          <div className="add-menu-section row justify-centent-center flex-column">
-            <h1>Add Menu</h1>
+          <div className="add-menu-section d-flex justify-centent-center align-items-start flex-column w-50">
+            <h1 className="ml-3">Add Menu</h1>
 
             <div className="col-1">
               <div className="row-1">
@@ -175,7 +181,6 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
             </div>
           </div>
         </div>
-        <div></div>
         <ToastContainer
           position="bottom-center"
           autoClose={5000}

@@ -60,8 +60,8 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
   if (!restaurantName?.restaurant) {
     return (
       <>
-        <div className="Restaurant-section mr-5">
-          <h1>Add Restaurant</h1>
+        <div className="Restaurant-section d-flex flex-column justify-content-center align-items-start">
+          <h1 className="ml-3">Add Restaurant</h1>
           <form onSubmit={restaurantsubmit}>
             <div className="col-1">
               <div className="row-1">
@@ -71,7 +71,7 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
                     id="restaurant"
                     name="restaurant"
                     type="text"
-                    className="py-1 px-2"
+                    className="py-1 px-2 input-border"
                     value={res.restaurant}
                     onChange={setResaurant}
                   />
@@ -83,14 +83,14 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
                   <input
                     id="address"
                     name="address"
-                    className="py-1 px-2"
+                    className="py-1 px-2 input-border"
                     type="text"
                     value={res.address}
                     onChange={setResaurant}
                   />
                 </div>
               </div>
-              <input type="submit" VALUE="Submit" className="btn btn-primary" />
+              <input type="submit" VALUE="Submit" className="btn btn-warning" />
             </div>
           </form>
         </div>

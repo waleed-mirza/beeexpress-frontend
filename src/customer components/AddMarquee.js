@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { REQ_URL } from "../CONSTANTS";
@@ -12,10 +13,14 @@ import { Toast } from "./validationError/Checks";
 function AddMarquee({ userInformation, userEventCategory }) {
   const { id } = useParams();
   const [marqueeDetails, setMarqueeDetails] = useState([]);
+  const history = useHistory();
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${REQ_URL}marquee/getall`,
+      url: `${REQ_URL}marquee/getbyid`,
+      params: {
+        managerid: localStorage.getItem("beeid"),
+      },
     })
       .then((response) => {
         if (response.data.status === "ok")
@@ -52,6 +57,16 @@ function AddMarquee({ userInformation, userEventCategory }) {
         ) : (
           <Marquee userEventCategory={userEventCategory} />
         )}
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <div
+            className="h4 btn btn-warning"
+            onClick={() => {
+              history.push(`/`);
+            }}
+          >
+            DONE
+          </div>
+        </div>
         <VenueDetails
           userEventCategory={userEventCategory}
           marqueeDetails={marqueeDetails}
