@@ -86,9 +86,9 @@ function CustomerOrderItem({ loggedIn }) {
   useEffect(() => {
     // const interval = setInterval(() => {
     getCoords();
-    // }, 30000);
+    // }, 1000);
     // return () => clearInterval(interval);
-  }, []);
+  }, [renderCheck]);
 
   const acceptDelivery = (deliveryboyid, isacceptedfordelivery) => {
     axios({
@@ -218,15 +218,11 @@ function CustomerOrderItem({ loggedIn }) {
     return total;
   };
   function getCoords(customerid, deliveryboyid) {
-    // if (orderDetails?.customerid) {
-    // console.log("customer getlocatons");
     setCustomerCoords([]);
     axios({
       method: "GET",
       url: `${REQ_URL}location/locationall`,
-      params: {
-        // userid: orderDetails.customerid,
-      },
+      params: {},
     }).then((response) => {
       let customer = response.data.result.find((x) => x.userid === customerid);
       let deliveryboy = response.data.result.find(
@@ -238,25 +234,8 @@ function CustomerOrderItem({ loggedIn }) {
       data.push(deliveryboy);
 
       console.log(data, "location data");
-      // setSwitchData(data);
       setCustomerCoords(data);
-      // setCustomerCoords(customer);
-      // setDeliveryBoyCoords(deliveryboy);
     });
-    // }
-    // if (orderDetails?.deliveryboyid) {
-    //   console.log("delivery boy getlocatons");
-
-    //   axios({
-    //     method: "GET",
-    //     url: `${REQ_URL}location/get`,
-    //     params: {
-    //       userid: orderDetails.deliveryboyid,
-    //     },
-    //   }).then((response) => {
-    //     setDeliveryBoyCoords(response.data.result);
-    //   });
-    // }
   }
   if (loggedIn)
     return (

@@ -82,9 +82,12 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const role = localStorage.getItem("userrole");
       if (
-        userInformation.userRole === "customer" ||
-        userInformation.userRole === "deliveryboy"
+        // userInformation.userRole === "customer" ||
+        // userInformation.userRole === "deliveryboy"
+        role === "customer" ||
+        role === "deliveryboy"
       )
         if ("geolocation" in navigator) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -104,7 +107,7 @@ function App() {
         } else {
           console.log("Not Available");
         }
-    }, 3000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [renderLocationCheck]);
