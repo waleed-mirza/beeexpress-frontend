@@ -36,7 +36,7 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
     });
 
     axios
-      .post("http://localhost:5000/category/searchbyid", {
+      .post(`${REQ_URL}category/searchbyid`, {
         managerid: localStorage.getItem("beeid"),
       })
       .then((response) => {
@@ -83,7 +83,7 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
       };
 
       axios
-        .post("http://localhost:5000/menu/add", displayMenu)
+        .post(`${REQ_URL}menu/add`, displayMenu)
         .then((res) => {
           setMenu({
             category: "",

@@ -14,6 +14,7 @@ import Cart from "./Cart";
 // Importing Images
 import backArrow from "../images/Back Arrow.svg";
 import { useSearchParams } from "react-router-dom";
+import { REQ_URL } from "../CONSTANTS";
 
 // const category = [
 //   {
@@ -107,7 +108,7 @@ const Menu = (props) => {
     const param = window.location.pathname.split("/")[2];
 
     axios
-      .get("http://localhost:5000/auth/checklogin", {
+      .get(`${REQ_URL}auth/checklogin`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -115,7 +116,7 @@ const Menu = (props) => {
       .then((res) => {
         if (res.data.loggedIn === true) setUserId(res.data.id);
         axios
-          .get("http://localhost:5000/menu")
+          .get(`${REQ_URL}menu`)
           .then((response) => {
             // setMenu({ menus: response.data });
             let result = response.data;
@@ -132,7 +133,7 @@ const Menu = (props) => {
             console.log(error);
           });
         axios
-          .get("http://localhost:5000/category")
+          .get(`${REQ_URL}category`)
           .then((response) => {
             // setCat({ categ: response.data });
 
@@ -151,7 +152,7 @@ const Menu = (props) => {
           });
 
         axios
-          .get("http://localhost:5000/restaurant/getall")
+          .get(`${REQ_URL}restaurant/getall`)
           .then((response) => {
             // setMenu({ restaurant: response.data });
             let result = response.data;

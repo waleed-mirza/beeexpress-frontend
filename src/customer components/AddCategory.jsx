@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "./validationError/Checks";
+import { REQ_URL } from "../CONSTANTS";
 
 const AddCategory = ({ checkflag, setCheckflag }) => {
   const [cat, setCat] = useState({
@@ -11,7 +12,7 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
   const [inputcheck, setInputcheck] = useState(false);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/checklogin", {
+      .get(`${REQ_URL}auth/checklogin`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -34,7 +35,7 @@ const AddCategory = ({ checkflag, setCheckflag }) => {
       };
 
       axios
-        .post("http://localhost:5000/category/add", displayCategory)
+        .post(`${REQ_URL}category/add`, displayCategory)
         .then((res) => {
           Toast("category added successfully", "success");
           setCat({

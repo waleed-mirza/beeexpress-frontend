@@ -20,6 +20,7 @@ import hiveBackdrop from "../images/Hive Backdrop.svg";
 // Importing other packages
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { REQ_URL } from "../CONSTANTS";
 
 // Static data
 
@@ -73,7 +74,7 @@ const FoodOrderPage = ({ cartItemsAddition, setCartItemsAddition }) => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/restaurant/getall",
+      url: `${REQ_URL}restaurant/getall`,
     }).then((res) => {
       const result = res.data;
       for (let index = 0; index < result.length; index++) {

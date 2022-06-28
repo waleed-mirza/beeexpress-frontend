@@ -62,7 +62,7 @@ function App() {
   const [renderLocationCheck, setRenderLocationCheck] = useState(false);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/checklogin", {
+      .get(`${REQ_URL}auth/checklogin`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -141,6 +141,8 @@ function App() {
               userInformation={userInformation}
               component={EventOrder}
               path="/event-order/:id"
+              // path="/event-order"
+              // component={Marquee}
             />
             <CustomerProtectedRoute
               exact

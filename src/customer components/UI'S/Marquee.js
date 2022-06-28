@@ -4,6 +4,7 @@ import { Toast } from "../validationError/Checks";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { REQ_URL } from "../../CONSTANTS";
 
 function Marquee({ userEventCategory, marqueeid }) {
   const history = useHistory();
@@ -26,7 +27,7 @@ function Marquee({ userEventCategory, marqueeid }) {
     }
     axios({
       method: "POST",
-      url: "http://localhost:5000/marquee/add",
+      url: `${REQ_URL}marquee/add`,
       data: {
         managerid: localStorage.getItem("beeid"),
         name: inputValues.name,

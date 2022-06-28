@@ -8,6 +8,7 @@ import axios from "axios";
 
 //Importing Images
 import logo from "../images/Logo.svg";
+import { REQ_URL } from "../CONSTANTS";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -40,24 +41,22 @@ const Login = () => {
       };
 
       // console.log(displayUser);
-      axios
-        .post("http://localhost:5000/auth/login", displayUser)
-        .then((res) => {
-          if (!res.data.auth) {
-            setLoginStatus(false);
-            Toast("error", res.data.message || "Not Logged In");
-          } else {
-            localStorage.setItem("token", res.data.token);
-            setLoginStatus(true);
-            localStorage.setItem("email", res.data.email);
-            localStorage.setItem("userrole", res.data.result.userrole);
-            localStorage.setItem("beeid", res.data.result._id);
+      axios.post(`${REQ_URL}auth/login`, displayUser).then((res) => {
+        if (!res.data.auth) {
+          setLoginStatus(false);
+          Toast("error", res.data.message || "Not Logged In");
+        } else {
+          localStorage.setItem("token", res.data.token);
+          setLoginStatus(true);
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("userrole", res.data.result.userrole);
+          localStorage.setItem("beeid", res.data.result._id);
 
-            console.log(res.data.result);
-            Toast("success", "Congrats! Logged In");
-            window.location = "/";
-          }
-        });
+          console.log(res.data.result);
+          Toast("success", "Congrats! Logged In");
+          window.location = "/";
+        }
+      });
     } else {
       Toast("error", "Email is not correct");
     }
@@ -65,7 +64,7 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("userLogout") === "1") {
-      axios.get("http://localhost:5000/auth/logout").then((res) => {
+      axios.get(`${REQ_URL}auth/logout`).then((res) => {
         Toast("Logged Out", "success");
         localStorage.removeItem("token");
         localStorage.removeItem("email");
@@ -74,7 +73,7 @@ const Login = () => {
         localStorage.setItem("userLogout", "0");
       });
     } else {
-      axios.get("http://localhost:5000/auth/login").then((res) => {
+      axios.get(`${REQ_URL}auth/login`).then((res) => {
         if (res.data.loggedIn == true) {
           setLoginStatus(true);
           Toast("Already Logged In", "success");

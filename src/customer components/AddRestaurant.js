@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { Toast } from "./validationError/Checks";
+import { REQ_URL } from "../CONSTANTS";
 
 const AddRestaurant = ({ checkflag, setCheckflag }) => {
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/checklogin", {
+      .get(`${REQ_URL}auth/checklogin`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -15,7 +16,7 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
         if (res.data.loggedIn === true) {
           setUserId(res.data.id);
           axios
-            .post("http://localhost:5000/restaurant/searchbyid", {
+            .post(`${REQ_URL}restaurant/searchbyid`, {
               managerid: res.data.id,
             })
             .then((res) => {
@@ -48,13 +49,11 @@ const AddRestaurant = ({ checkflag, setCheckflag }) => {
         address: res.address,
         managerid: userId,
       };
-      axios
-        .post("http://localhost:5000/restaurant/add", displayRestaurant)
-        .then((res) => {
-          console.log(res.data);
-          Toast("success", "Name registered");
-          setCheckflag(!checkflag);
-        });
+      axios.post(`${REQ_URL}restaurant/add`, displayRestaurant).then((res) => {
+        console.log(res.data);
+        Toast("success", "Name registered");
+        setCheckflag(!checkflag);
+      });
     }
   };
   if (!restaurantName?.restaurant) {

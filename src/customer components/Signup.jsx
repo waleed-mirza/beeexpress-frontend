@@ -9,6 +9,7 @@ import logo from "../images/Logo.svg";
 import { CheckEmail, Toast } from "./validationError/Checks";
 import { ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { REQ_URL } from "../CONSTANTS";
 
 const Signup = () => {
   const history = useHistory();
@@ -49,21 +50,19 @@ const Signup = () => {
         CNIC: user.CNIC,
         userrole: user.userrole,
       };
-      axios
-        .post("http://localhost:5000/auth/register", displayUser)
-        .then((res) => {
-          console.log(res.status, "status");
+      axios.post(`${REQ_URL}auth/register`, displayUser).then((res) => {
+        console.log(res.status, "status");
 
-          const { status, message } = res.data;
-          if (status === "ok") {
-            Toast("success", message);
-            setTimeout(function() {
-              history.push(`/newlogin`);
-            }, 2000);
-          } else {
-            Toast("error", message);
-          }
-        });
+        const { status, message } = res.data;
+        if (status === "ok") {
+          Toast("success", message);
+          setTimeout(function() {
+            history.push(`/newlogin`);
+          }, 2000);
+        } else {
+          Toast("error", message);
+        }
+      });
     } else {
       Toast("error", "Email is not correct");
     }

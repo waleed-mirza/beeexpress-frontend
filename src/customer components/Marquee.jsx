@@ -22,6 +22,7 @@ import axios from "axios";
 import { REQ_URL } from "../CONSTANTS";
 import { useHistory } from "react-router-dom";
 import { Toast } from "./validationError/Checks";
+import EventOrder from "./EventOrder";
 
 const images = ["/static/media/1.jpg"];
 const Marquee = () => {
@@ -29,6 +30,14 @@ const Marquee = () => {
   const history = useHistory();
   const [profileData, setProfileData] = useState({});
   const [marqueeDetails, setMarqueeDetails] = useState({});
+  const [inOrderDetail, setInOrderDetail] = useState({
+    noofpersons: "",
+    eventtype: "",
+    eventdate: new Date(),
+  });
+  const [orderId, setOrderId] = useState(0);
+  const [renderCheck, setRenderCheck] = useState(false);
+
   useEffect(() => {
     axios({
       method: "POST",
@@ -49,8 +58,9 @@ const Marquee = () => {
     }).then((response) => {
       setMarqueeDetails(response.data.result[0]);
     });
-  }, []);
+  }, [renderCheck]);
   const onOrderCreation = () => {
+    console.log(inOrderDetail, "inorderdetails");
     axios({
       method: "POST",
       url: `${REQ_URL}eventorder/create`,
@@ -60,13 +70,13 @@ const Marquee = () => {
         customerid: localStorage.getItem("beeid"),
         placetype: marqueeDetails.category,
         eventlocation: marqueeDetails.address,
+        ...inOrderDetail,
       },
     })
       .then((response) => {
         Toast("success", "Order Placed");
-        setTimeout(function() {
-          history.push(`/event-order/${response.data.result._id}`);
-        }, 3000);
+        setOrderId(response.data.result._id);
+        history.go(0);
       })
       .catch((err) => {
         Toast("error", "Server is not responding");
@@ -134,13 +144,21 @@ const Marquee = () => {
             )}
           </div>
         </div>
-        <div className="book-now-btn">
-          {/* <Link to="/checkout"> */}
-          <button className="button-style" onClick={onOrderCreation}>
-            Book Now
-          </button>{" "}
-          {/* </Link> */}
-        </div>
+
+        <EventOrder
+          orderid={orderId}
+          setInOrderDetail={setInOrderDetail}
+          onOrderCreation={onOrderCreation}
+        />
+        {!history.location.pathname.includes("marquee") && (
+          <div className="book-now-btn">
+            {/* <Link to="/checkout"> */}
+            <button className="button-style" onClick={onOrderCreation}>
+              Book Now
+            </button>{" "}
+            {/* </Link> */}
+          </div>
+        )}
       </div>
     </>
   );
