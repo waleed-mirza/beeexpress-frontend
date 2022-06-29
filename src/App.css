@@ -127,11 +127,11 @@ html {
 .custom-card h1 {
   font-size: 35px;
   font-weight: 600;
-  margin: 20px 0px;
+  margin: 5px 0px;
 }
 .custom-card p {
   opacity: 0.8;
-  margin: 20px 0px;
+  margin: 5px 0px;
   font-size: 17px;
   line-height: 35px;
 }

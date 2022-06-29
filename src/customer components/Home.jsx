@@ -18,6 +18,7 @@ import bookCardImage from "../images/Book Hall.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import SimpleChatBot from "./SimpleChatBot";
+import { FoodBg } from "./BackgroundImage";
 
 const Home = ({ adminCheck }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -47,6 +48,7 @@ const Home = ({ adminCheck }) => {
       <>
         {loggedIn == true && <LoggedInNav showCart={showCart} linkTo="/" />}
         {loggedIn == false && <Nav />}
+        <FoodBg />
         <div className="home-section">
           <div className="home-left-section">
             <h1>

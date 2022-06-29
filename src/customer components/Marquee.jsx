@@ -23,6 +23,7 @@ import { REQ_URL } from "../CONSTANTS";
 import { useHistory } from "react-router-dom";
 import { Toast } from "./validationError/Checks";
 import EventOrder from "./EventOrder";
+import { EventBg } from "./BackgroundImage";
 
 const images = ["/static/media/1.jpg"];
 const Marquee = () => {
@@ -61,6 +62,10 @@ const Marquee = () => {
   }, [renderCheck]);
   const onOrderCreation = () => {
     console.log(inOrderDetail, "inorderdetails");
+    if (inOrderDetail.noofpersons > 2000) {
+      Toast("error", "No of persons should be less than 2000");
+      return;
+    }
     axios({
       method: "POST",
       url: `${REQ_URL}eventorder/create`,
@@ -89,6 +94,8 @@ const Marquee = () => {
         src="/static/media/Hive Backdrop.0dc89738.svg"
         className="background-delta"
       ></img>
+      <EventBg />
+
       <div className="marquee-section">
         <div className="marquee-title">
           <Link to="/option">

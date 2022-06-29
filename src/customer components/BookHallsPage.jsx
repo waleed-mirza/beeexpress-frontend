@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { REQ_URL } from "../CONSTANTS";
 import { Toast } from "./validationError/Checks";
+import { EventBg } from "./BackgroundImage";
 
 const marquees = [
   {
@@ -91,6 +92,8 @@ const BookHallsPage = ({ place }) => {
   return (
     <>
       <LoggedInNav hideCart={{ display: "none" }} />
+      <EventBg />
+
       <img
         src="/static/media/Hive Backdrop.0dc89738.svg"
         className="background-delta"

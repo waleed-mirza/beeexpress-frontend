@@ -4,6 +4,7 @@ import { Toast } from "../validationError/Checks";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { REQ_URL } from "../../CONSTANTS";
 
 function UpdateMarquee({ userEventCategory, id }) {
   const history = useHistory();
@@ -19,13 +20,14 @@ function UpdateMarquee({ userEventCategory, id }) {
   useEffect(() => {
     axios({
       mehtod: "GET",
-      url: "http://localhost:5000/marquee/getbyid",
+      url: `${REQ_URL}marquee/getbyid`,
       params: {
         managerid: localStorage.getItem("beeid"),
         marqueeid: id,
       },
     }).then((response) => {
       setMarqueeDetails(response.data.result[0]);
+      console.log("update marquee page", response.data.result[0]);
     });
   }, [renderCheck]);
   const handleChangeInputValues = (e) => {
@@ -40,7 +42,7 @@ function UpdateMarquee({ userEventCategory, id }) {
     }
     axios({
       method: "POST",
-      url: "http://localhost:5000/marquee/update",
+      url: `${REQ_URL}marquee/update`,
       data: {
         managerid: localStorage.getItem("beeid"),
         marqueeid: id,
@@ -61,7 +63,7 @@ function UpdateMarquee({ userEventCategory, id }) {
     servicesToPush?.push(inputValues.service);
     axios({
       method: "POST",
-      url: "http://localhost:5000/marquee/updateservices",
+      url: `${REQ_URL}marquee/updateservices`,
       data: {
         managerid: localStorage.getItem("beeid"),
         marqueeid: id,
@@ -84,7 +86,7 @@ function UpdateMarquee({ userEventCategory, id }) {
 
     axios({
       method: "POST",
-      url: "http://localhost:5000/marquee/updateservices",
+      url: `${REQ_URL}marquee/updateservices`,
       data: {
         managerid: localStorage.getItem("beeid"),
         marqueeid: id,
@@ -111,7 +113,7 @@ function UpdateMarquee({ userEventCategory, id }) {
     formData.append("images", JSON.stringify(marqueeDetails?.images));
     axios({
       method: "POST",
-      url: "http://localhost:5000/marquee/updateimages",
+      url: `${REQ_URL}marquee/updateimages`,
       data: formData,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -131,10 +133,10 @@ function UpdateMarquee({ userEventCategory, id }) {
     let imagesToPush = marqueeDetails.images.filter(
       (x) => x !== marqueeDetails.images[index]
     );
-
+    console.log(index, "---", marqueeDetails.images);
     axios({
       method: "POST",
-      url: "http://localhost:5000/marquee/deleteimage",
+      url: `${REQ_URL}marquee/deleteimage`,
       data: {
         managerid: localStorage.getItem("beeid"),
         marqueeid: id,
@@ -261,17 +263,17 @@ function UpdateMarquee({ userEventCategory, id }) {
                 {marqueeDetails?.images?.map((val, index) => {
                   return (
                     <div width="350px" className="position-relative">
+                      <div
+                        className="delete-img-btn"
+                        onClick={() => onDeleteImage(index)}
+                      >
+                        X
+                      </div>
                       <img
                         src={val}
                         alt="vanue image here"
                         className="img-fluid"
                       />
-                      <div
-                        className="delete-img-btn"
-                        onClick={(index) => onDeleteImage(index)}
-                      >
-                        X
-                      </div>
                     </div>
                   );
                 })}

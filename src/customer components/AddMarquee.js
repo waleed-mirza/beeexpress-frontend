@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { REQ_URL } from "../CONSTANTS";
+import { EventBg } from "./BackgroundImage";
 import LoggedInNav from "./LoggedInNav";
 import Marquee from "./UI'S/Marquee";
 import UpdateMarquee from "./UI'S/UpdateMarquee";
@@ -11,7 +12,7 @@ import VenueDetails from "./UI'S/VenueDetails";
 import { Toast } from "./validationError/Checks";
 
 function AddMarquee({ userInformation, userEventCategory }) {
-  const { id } = useParams();
+  const { id } = useParams() || "";
   const [marqueeDetails, setMarqueeDetails] = useState([]);
   const history = useHistory();
   useEffect(() => {
@@ -20,6 +21,7 @@ function AddMarquee({ userInformation, userEventCategory }) {
       url: `${REQ_URL}marquee/getbyid`,
       params: {
         managerid: localStorage.getItem("beeid"),
+        marqueeid: id,
       },
     })
       .then((response) => {
@@ -48,6 +50,7 @@ function AddMarquee({ userInformation, userEventCategory }) {
   ) {
     return (
       <>
+        <EventBg />
         {userInformation.loggedIn === true && (
           <LoggedInNav showCart={showCart} linkTo="/" />
         )}

@@ -7,6 +7,7 @@ import { REQ_URL } from "../CONSTANTS";
 import { useHistory } from "react-router-dom";
 
 import OrderDetails from "./UI'S/OrderDetails";
+import { EventBg } from "./BackgroundImage";
 
 function EventOrder({
   setInOrderDetail = function() {},
@@ -104,6 +105,7 @@ function EventOrder({
   };
   return (
     <div className="container my-5">
+      <EventBg />
       <h3 className="text-center my-3 font-weight-bold">
         Complete Booking Details
       </h3>

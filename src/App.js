@@ -49,6 +49,7 @@ import { REQ_URL } from "./CONSTANTS";
 import UpdateProfile from "./customer components/UpdateProfile";
 
 import BackgroundImage from "./foodimages/backgroundowner.jpg";
+import { FoodBg } from "./customer components/BackgroundImage";
 
 function App() {
   const history = useHistory();
@@ -114,9 +115,8 @@ function App() {
 
   return (
     <>
-      <div className="app-background">
-        <img src={BackgroundImage} alt="" />
-      </div>
+      <FoodBg />
+
       <Router>
         <div className="App">
           <Switch>

@@ -15,8 +15,11 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
     menuitem: "",
     price: null,
     categories: [],
+    itemimage: null,
   });
-
+  const handleImageUpload = (e) => {
+    setMenu({ ...menu, itemimage: e.target.files[0] });
+  };
   const [checkflag, setCheckflag] = useState(false);
   const [approved, setApproved] = useState(false);
   useEffect(() => {
@@ -58,7 +61,6 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
     // setMenu({ ...menu, category: e.target.value });
     const { name, value } = e.target;
     setMenu({ ...menu, [name]: value });
-    console.log(menu);
   };
   const setMenuItem = (e) => {
     setMenu({ ...menu, menuitem: e.target.value });
@@ -73,7 +75,14 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
   };
   const menuSubmit = (e) => {
     e.preventDefault();
-    if (menu.category && menu.menuitem && menu.price) {
+    if (menu.category && menu.menuitem && menu.price && menu.itemimage) {
+      let formData = new FormData();
+      formData.append("itemimage", menu.itemimage);
+      formData.append("category", menu.category);
+      formData.append("menuitem", menu.menuitem);
+      formData.append("price", menu.price);
+      formData.append("managerid", userId);
+
       const displayMenu = {
         ...menu,
         category: menu.category,
@@ -81,22 +90,22 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
         price: menu.price,
         managerid: userId,
       };
-
       axios
-        .post(`${REQ_URL}menu/add`, displayMenu)
+        .post(`${REQ_URL}menu/add`, formData)
         .then((res) => {
           setMenu({
             category: "",
             menuitem: "",
             price: null,
             categories: [],
+            itemimage: null,
           });
           Toast("success", "Menu item is added");
 
           setCheckflag(!checkflag);
           console.log(menu);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => Toast("error", err.message));
     } else {
       Toast("error", "Some Menu item fields are empty");
     }
@@ -163,6 +172,15 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
                     />
                   </div>
                   <div className="form-group">
+                    <label htmlFor="">Image:</label>
+                    <input
+                      type="file"
+                      onChange={handleImageUpload}
+                      alt=""
+                      className="input-border py-2 px-3"
+                    />
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="">Price:</label>
                     <input
                       type="number"
@@ -171,6 +189,7 @@ const AddMenu = ({ loggedIn, userrole, userId }) => {
                       className="input-border py-2 px-3"
                     />
                   </div>
+
                   <input
                     type="submit"
                     value="Submit"

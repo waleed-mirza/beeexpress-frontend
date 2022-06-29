@@ -7,11 +7,14 @@ import Nav from "./Nav";
 // Importing Images
 import aboutImage from "../images/About Us.svg";
 import hiveBackdrop from "../images/Hive Backdrop.svg";
+import { FoodBg } from "./BackgroundImage";
 
 const About = () => {
   return (
     <>
       <Nav />
+      <FoodBg />
+
       <div className="about-section">
         <div className="about-section-left">
           <h1>About Us</h1>

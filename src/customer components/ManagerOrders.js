@@ -12,6 +12,7 @@ function ManagerOrders() {
         filter=""
         renderCheck={renderCheck}
         userRole="manager"
+        managerid={localStorage.getItem("beeid")}
       />
     </div>
   );

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { REQ_URL } from "../../CONSTANTS";
+import { EventBg } from "../BackgroundImage";
 
 function Marquee({ userEventCategory, marqueeid }) {
   const history = useHistory();
@@ -41,6 +42,8 @@ function Marquee({ userEventCategory, marqueeid }) {
   };
   return (
     <div className="container mt-5">
+      <EventBg />
+
       <h3 className="text-center font-weight-bolder color-background-text">
         {userEventCategory.toUpperCase()} Details
       </h3>

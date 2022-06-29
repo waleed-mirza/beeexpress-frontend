@@ -106,7 +106,6 @@ const Menu = (props) => {
   // const [cartItemsAddition, setCartItemsAddition] = useState([]);
   useEffect(() => {
     const param = window.location.pathname.split("/")[2];
-
     axios
       .get(`${REQ_URL}auth/checklogin`, {
         headers: {
@@ -254,10 +253,13 @@ const Menu = (props) => {
               </div>
             </> */
             <div
-              className="menu-item m-2 p-2 mx-5 custom-card scale-bigger"
+              className="position-relative menu-item m-2 mx-5 custom-card scale-bigger py-2"
               key={categories._id}
             >
-              <h4 className="color-background-text">
+              <div className="food-itemimage">
+                <img src={categories.itemimage} />
+              </div>
+              <h4 className="color-background-text font-weight-bold mt-3">
                 {categories.category?.toUpperCase()}
               </h4>
               <div className="menu-item-desc">

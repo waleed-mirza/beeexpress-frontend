@@ -69,7 +69,9 @@ function CustomerOrderItem({ loggedIn }) {
         orderid: id,
       },
     }).then(async (response) => {
+      response.data.result[0].itemsorder.reverse();
       setOrderDetails(response.data.result[0]);
+
       findLocation(await response.data.result[0].customerid);
       getCoords(
         response.data.result[0].customerid,
