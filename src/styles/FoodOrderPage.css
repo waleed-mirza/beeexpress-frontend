@@ -706,7 +706,13 @@ body {
 }
 
 .color-background-text {
-  background-image: linear-gradient(45deg, #ffc400, #000000);
+  background-image: linear-gradient(
+    to right,
+    #000000,
+    rgb(255, 170, 0)
+  ) !important;
+  /* background-image: linear-gradient(to right, #000, #ffc400); */
+  font-weight: 600;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
@@ -781,4 +787,14 @@ body {
 
 .food-itemimage img {
   width: 100%;
+}
+
+.text-over-bg {
+  font-weight: 600;
+}
+.e-further-data input,
+.e-further-data .form-group,
+.e-further-data select {
+  color: black !important;
+  font-weight: 500 !important;
 }

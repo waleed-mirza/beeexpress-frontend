@@ -104,13 +104,13 @@ function EventOrder({
     }
   };
   return (
-    <div className="container my-5">
+    <div className="container my-5 text-over-bg">
       <EventBg />
       <h3 className="text-center my-3 font-weight-bold">
         Complete Booking Details
       </h3>
 
-      <div className="form-container w-75 ">
+      <div className="form-container w-75 e-further-data">
         <form onSubmit={onSubmit}>
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">No of Persons</label>

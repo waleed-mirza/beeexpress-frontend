@@ -159,15 +159,16 @@ const Menu = (props) => {
             for (let index = 0; index < response.data.length; index++) {
               if (response.data[index].managerid === param) {
                 temp.push(response.data[index]);
+                setRestaurant([...restaurant, response.data[index]]);
               }
             }
-            setRestaurant(temp);
+            // setRestaurant([...restaurant, temp]);
           })
           .catch((error) => {
             console.log(error);
           });
       });
-  }, []);
+  }, [restaurant.length]);
   const addingItemsToCart = () => {};
 
   return (

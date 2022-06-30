@@ -67,7 +67,7 @@ function FoodOrder({ customerid, managerid, orderid }) {
         orderid: orderid || "",
       },
     }).then((response) => {
-      setOrderDetails(response.data.result);
+      setOrderDetails(response.data.result.reverse());
       setRenderCheck(!renderCheck);
     });
     axios({
@@ -84,7 +84,7 @@ function FoodOrder({ customerid, managerid, orderid }) {
         src="/static/media/Hive Backdrop.0dc89738.svg"
         className="background-delta"
       ></img>
-      <div className="my-5">
+      <div className="my-5 text-over-bg">
         <h2 className="text-center font-weight-bold my-3 color-background-text">
           Food Orders
         </h2>

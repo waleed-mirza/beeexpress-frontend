@@ -36,7 +36,7 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
       },
     }).then((response) => {
       console.log(response.data.result);
-      setOrderDetails(response.data.result);
+      setOrderDetails(response.data.result.reverse());
     });
   }, [renderCheck, deleteRenderCheck, reviewCheck]);
   const onDeleteOrder = (id) => {
@@ -111,7 +111,7 @@ function OrderDetails({ userid, filter, userRole, renderCheck, managerid }) {
       });
   };
   return (
-    <div className="my-5 container table-responsive">
+    <div className="my-5 container table-responsive text-over-bg">
       <div className="w-75 mx-auto">
         <h3 className="text-center my-3 font-weight-bold color-background-text">
           Event Order Details

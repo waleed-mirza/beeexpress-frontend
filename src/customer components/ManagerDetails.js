@@ -23,7 +23,7 @@ function ManagerDetails({ userid, filter, userRole, renderCheck, managerid }) {
       },
     }).then((response) => {
       console.log(response.data.result);
-      setProfileData(response.data.result);
+      setProfileData(response.data.result.reverse());
     });
   }, [renderCheck, deleteRenderCheck]);
 
